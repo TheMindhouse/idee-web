@@ -1,5 +1,7 @@
 // @flow
 
+import { User } from "./User"
+
 type FirebaseUserProps = {
   uid: string,
   displayName: string,
@@ -24,5 +26,14 @@ export class FirebaseUser {
     this.emailVerified = props.emailVerified
     this.photoURL = props.photoURL
     this.refreshToken = props.refreshToken
+  }
+
+  toUser(): User {
+    return new User({
+      id: this.uid,
+      name: this.displayName,
+      email: this.email,
+      avatarUrl: this.photoURL,
+    })
   }
 }

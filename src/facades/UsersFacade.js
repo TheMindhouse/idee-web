@@ -1,11 +1,11 @@
 // @flow
 import { db } from "./FirebaseFacade"
 import { User } from "../models/User"
+import { COLLECTIONS } from "../constants/firebase"
 
-const COLLECTION_NAME = "users"
 export class UsersFacade {
   static upsertUser(user: User): Promise<User> {
-    const docRef = db.collection(COLLECTION_NAME).doc(user.id)
+    const docRef = db.collection(COLLECTIONS.USERS).doc(user.id)
     return docRef.set(user.toExport(), { merge: true }).then(() => user)
   }
 }

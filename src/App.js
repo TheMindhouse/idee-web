@@ -5,9 +5,6 @@ import ScrollToTop from "react-router-scroll-top"
 import { AppHomepage } from "./routes/AppHomepage"
 import { URLHelper } from "./helpers/URLHelper"
 import { SignIn } from "./routes/SignIn"
-import { firebase } from "./facades/FirebaseFacade"
-import "@firebase/firestore"
-import { FirestoreProvider } from "react-firestore"
 import { AuthProvider } from "./stores/AuthProvider"
 // import ReactGA from "react-ga"
 // import { hotjar } from "react-hotjar"
@@ -28,27 +25,25 @@ const logPageView = () => {
 class App extends Component<{}> {
   render() {
     return (
-      <FirestoreProvider firebase={firebase}>
-        <AuthProvider>
-          <Router>
-            <ScrollToTop>
-              <div className="AppContent">
-                <Route path="/" component={logPageView} />
-                <Switch>
-                  <Route
-                    exact
-                    path={URLHelper.homepage}
-                    component={AppHomepage}
-                  />
-                  <Route exact path={URLHelper.login} component={SignIn} />
-                  {/*<Route path="/404" component={ErrorPage404} />*/}
-                  {/*<Route component={ErrorPage404} />*/}
-                </Switch>
-              </div>
-            </ScrollToTop>
-          </Router>
-        </AuthProvider>
-      </FirestoreProvider>
+      <AuthProvider>
+        <Router>
+          <ScrollToTop>
+            <div className="AppContent">
+              <Route path="/" component={logPageView} />
+              <Switch>
+                <Route
+                  exact
+                  path={URLHelper.homepage}
+                  component={AppHomepage}
+                />
+                <Route exact path={URLHelper.login} component={SignIn} />
+                {/*<Route path="/404" component={ErrorPage404} />*/}
+                {/*<Route component={ErrorPage404} />*/}
+              </Switch>
+            </div>
+          </ScrollToTop>
+        </Router>
+      </AuthProvider>
     )
   }
 }

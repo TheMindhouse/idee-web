@@ -16,15 +16,9 @@ const signIn = (provider) => {
   return auth
     .signInWithPopup(provider)
     .then((result) => new FirebaseUser(result.user))
-    .then((firebaseUser: FirebaseUser) => {
-      const user = new User({
-        id: firebaseUser.uid,
-        name: firebaseUser.displayName,
-        email: firebaseUser.email,
-        avatarUrl: firebaseUser.photoURL,
-      })
-      return UsersFacade.upsertUser(user)
-    })
+    .then((firebaseUser: FirebaseUser) =>
+      UsersFacade.upsertUser(firebaseUser.toUser())
+    )
     .catch(function(error) {
       console.error("Error with logging in! ", error.message)
       throw new Error(error.message)
