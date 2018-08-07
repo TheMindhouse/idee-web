@@ -3,6 +3,7 @@ import { firebase } from "./FirebaseFacade"
 import "firebase/auth"
 import { FirebaseUser } from "../models/FirebaseUser"
 import { UsersFacade } from "./UsersFacade"
+import { User } from "../models/User"
 
 console.log("Setting up Auth Facade")
 
@@ -31,8 +32,9 @@ const signInWithGoogle = () => signIn(googleProvider)
 const signInWithFacebook = () => signIn(facebookProvider)
 const signOut = () => auth.signOut()
 const onAuthStateChanged = (cb: Function) => auth.onAuthStateChanged(cb)
-const getCurrentUser = () => {
-  console.log(auth.currentUser)
+const getCurrentUser = (): ?User => {
+  const user = auth.currentUser
+  return user ? new FirebaseUser(user).toUser() : null
 }
 
 export const AuthFacade = {
