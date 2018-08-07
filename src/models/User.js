@@ -21,8 +21,9 @@ export class User {
   }
 
   toExport() {
-    const objectToExport = { ...this }
-    delete objectToExport.id
-    return objectToExport
+    const obj = { ...this }
+    // Remove private fields
+    delete obj.id
+    return obj
   }
 }

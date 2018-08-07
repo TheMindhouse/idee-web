@@ -5758,6 +5758,10 @@ react-firestore@^0.8.1:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-flow-types@^0.2.0-beta.6:
+  version "0.2.0-beta.6"
+  resolved "https://registry.yarnpkg.com/react-flow-types/-/react-flow-types-0.2.0-beta.6.tgz#bf49c8b7864fcd0951b03286c63a80d66ce9fae4"
+
 react-google-button@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.5.3.tgz#d8c76328e51b55f2835a4ebe23817906dac6a4f8"

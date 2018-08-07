@@ -9,6 +9,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-firestore": "^0.8.1",
+    "react-flow-types": "^0.2.0-beta.6",
     "react-google-button": "^0.5.3",
     "react-router-dom": "^4.3.1",
     "react-router-scroll-top": "^0.1.1",

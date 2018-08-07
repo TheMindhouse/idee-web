@@ -3,7 +3,6 @@ import { firebase } from "./FirebaseFacade"
 import "firebase/auth"
 import { FirebaseUser } from "../models/FirebaseUser"
 import { UsersFacade } from "./UsersFacade"
-import { User } from "../models/User"
 
 console.log("Setting up Auth Facade")
 
@@ -15,7 +14,10 @@ const auth = firebase.auth()
 const signIn = (provider) => {
   return auth
     .signInWithPopup(provider)
-    .then((result) => new FirebaseUser(result.user))
+    .then(
+      (result: $npm$firebase$auth$UserCredential) =>
+        new FirebaseUser(result.user)
+    )
     .then((firebaseUser: FirebaseUser) =>
       UsersFacade.upsertUser(firebaseUser.toUser())
     )

@@ -6,6 +6,7 @@ import { AppHomepage } from "./routes/AppHomepage"
 import { URLHelper } from "./helpers/URLHelper"
 import { SignIn } from "./routes/SignIn"
 import { AuthProvider } from "./stores/AuthProvider"
+import { BoardsProvider } from "./stores/BoardsProvider"
 // import ReactGA from "react-ga"
 // import { hotjar } from "react-hotjar"
 
@@ -26,23 +27,25 @@ class App extends Component<{}> {
   render() {
     return (
       <AuthProvider>
-        <Router>
-          <ScrollToTop>
-            <div className="AppContent">
-              <Route path="/" component={logPageView} />
-              <Switch>
-                <Route
-                  exact
-                  path={URLHelper.homepage}
-                  component={AppHomepage}
-                />
-                <Route exact path={URLHelper.login} component={SignIn} />
-                {/*<Route path="/404" component={ErrorPage404} />*/}
-                {/*<Route component={ErrorPage404} />*/}
-              </Switch>
-            </div>
-          </ScrollToTop>
-        </Router>
+        <BoardsProvider>
+          <Router>
+            <ScrollToTop>
+              <div className="AppContent">
+                <Route path="/" component={logPageView} />
+                <Switch>
+                  <Route
+                    exact
+                    path={URLHelper.homepage}
+                    component={AppHomepage}
+                  />
+                  <Route exact path={URLHelper.login} component={SignIn} />
+                  {/*<Route path="/404" component={ErrorPage404} />*/}
+                  {/*<Route component={ErrorPage404} />*/}
+                </Switch>
+              </div>
+            </ScrollToTop>
+          </Router>
+        </BoardsProvider>
       </AuthProvider>
     )
   }

@@ -1,20 +1,17 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
 import { getComponentDisplayName } from "../helpers/getComponentDisplayName"
 import { AuthContext } from "../stores/AuthProvider"
-import { AuthFacade } from "../facades/AuthFacade"
-import { URLHelper } from "../helpers/URLHelper"
 import { FirebaseUser } from "../models/FirebaseUser"
 
 const withAuth = (WrappedComponent) => {
   class withAuth extends React.Component {
-    componentDidMount() {
-      AuthFacade.onAuthStateChanged((authUser) => {
-        if (!authUser) {
-          this.props.history.push(URLHelper.login)
-        }
-      })
-    }
+    // componentDidMount() {
+    //   AuthFacade.onAuthStateChanged((authUser) => {
+    //     if (!authUser) {
+    //       this.props.history.push(URLHelper.login)
+    //     }
+    //   })
+    // }
 
     render() {
       return (
@@ -33,7 +30,7 @@ const withAuth = (WrappedComponent) => {
     WrappedComponent
   )})`
 
-  return withRouter(withAuth)
+  return withAuth
 }
 
 export { withAuth }

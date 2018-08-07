@@ -1,94 +1,44 @@
 // @flow
 import * as React from "react"
-import { withAuth } from "../../hoc/withAuth"
-import { db } from "../../facades/FirebaseFacade"
-import { FirebaseUser } from "../../models/FirebaseUser"
+import { withBoards } from "../../hoc/withBoards"
+import type { WithBoards } from "../../stores/BoardsProvider"
 import { Board } from "../../models/Board"
-import { FieldPath } from "../../helpers/firebaseUtils"
-import * as Rx from "rxjs/Rx"
-import { BOARD_ROLES, COLLECTIONS } from "../../constants/firebase"
+import { IdeasCore } from "../../hoc/renderProps/IdeasCore"
+import { Idea } from "../../models/Idea"
 
 type BoardsListProps = {
-  authUser: FirebaseUser,
+  boardsStore: WithBoards,
 }
 
-type BoardsListState = {
-  boards: ?Array<Board>,
-}
-
-class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
+class BoardsList extends React.PureComponent<BoardsListProps> {
   static defaultProps = {}
 
-  state = {
-    boards: null,
-  }
-
-  componentDidMount() {
-    const collection = db.collection(COLLECTIONS.BOARDS)
-    const userId = this.props.authUser.uid
-    const emailPath = new FieldPath("roles", this.props.authUser.email)
-    const ownedRef = collection.where("ownerId", "==", userId)
-    const adminRef = collection.where(emailPath, "==", BOARD_ROLES.ADMIN)
-    const editorRef = collection.where(emailPath, "==", BOARD_ROLES.EDITOR)
-    const readerRef = collection.where(emailPath, "==", BOARD_ROLES.READER)
-
-    // Create Observables.
-    const owned$ = new Rx.Subject()
-    const editor$ = new Rx.Subject()
-
-    // Hook values from callback to the observable
-    ownedRef.onSnapshot((querySnapshot) => {
-      const boards = querySnapshot.docs.map(
-        (doc) =>
-          new Board({
-            id: doc.id,
-            ...doc.data(),
-          })
-      )
-      owned$.next(boards)
-    })
-
-    // Hook values from callback to the observable
-    editorRef.onSnapshot((querySnapshot) => {
-      const boards = querySnapshot.docs.map(
-        (doc) =>
-          new Board({
-            id: doc.id,
-            ...doc.data(),
-          })
-      )
-      editor$.next(boards)
-    })
-
-    Rx.Observable.combineLatest(owned$, editor$).subscribe(
-      (boardsContainers: Array<Array<Board>>) => {
-        console.log("Boards updated")
-        const boards: Array<Board> = [].concat.apply([], [...boardsContainers])
-        this.setState({ boards })
-      }
-    )
-  }
-
   render() {
-    if (!this.state.boards) {
-      return (
-        <div>
-          <p>Loading...</p>
-        </div>
-      )
+    const { boards } = this.props.boardsStore
+    if (!boards) {
+      return <div>Loading...</div>
     }
-
     return (
       <div>
-        <ul>
-          {this.state.boards.map((board) => (
-            <li key={board.id}>{board.name}</li>
-          ))}
-        </ul>
+        {boards.map((board: Board) => (
+          <li key={board.id}>{board.name}</li>
+        ))}
+
+        <h2>Ideas for {boards[0].name}</h2>
+        <IdeasCore
+          boardId={boards[0].id}
+          render={(ideas: ?Array<Idea>) =>
+            ideas ? (
+              ideas.map((idea: Idea) => <li>{idea.name}</li>)
+            ) : (
+              <p>No ideas</p>
+            )
+          }
+        />
       </div>
     )
   }
 }
 
-BoardsList = withAuth(BoardsList)
+BoardsList = withBoards(BoardsList)
 export { BoardsList }

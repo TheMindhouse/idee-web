@@ -1,5 +1,6 @@
 export const COLLECTIONS = {
   BOARDS: "boards",
+  IDEAS: "ideas",
   USERS: "users",
 }
 
