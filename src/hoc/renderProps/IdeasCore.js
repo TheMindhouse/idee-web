@@ -23,6 +23,21 @@ class IdeasCore extends React.PureComponent<IdeasCoreProps, IdeasCoreState> {
   unsubscribeFn: ?Function = null
 
   componentDidMount() {
+    this.subscribe()
+  }
+
+  componentDidUpdate(prevProps: IdeasCoreProps) {
+    if (prevProps.boardId !== this.props.boardId) {
+      this.unsubscribe()
+      this.setState({ ideas: null }, this.subscribe)
+    }
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
+  subscribe = () => {
     const boardId = this.props.boardId
     const ideasRef = db
       .collection(COLLECTIONS.BOARDS)
@@ -43,7 +58,7 @@ class IdeasCore extends React.PureComponent<IdeasCoreProps, IdeasCoreState> {
     })
   }
 
-  componentWillUnmount() {
+  unsubscribe = () => {
     if (typeof this.unsubscribeFn === "function") {
       this.unsubscribeFn()
     }

@@ -10,8 +10,16 @@ type BoardsListProps = {
   boardsStore: WithBoards,
 }
 
-class BoardsList extends React.PureComponent<BoardsListProps> {
+type BoardsListState = {
+  currentBoard: ?Board,
+}
+
+class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
   static defaultProps = {}
+
+  state = {
+    currentBoard: null,
+  }
 
   render() {
     const { boards } = this.props.boardsStore
@@ -21,20 +29,35 @@ class BoardsList extends React.PureComponent<BoardsListProps> {
     return (
       <div>
         {boards.map((board: Board) => (
-          <li key={board.id}>{board.name}</li>
+          <li
+            key={board.id}
+            onClick={() => this.setState({ currentBoard: board })}
+          >
+            {board.name}
+          </li>
         ))}
 
-        <h2>Ideas for {boards[0].name}</h2>
-        <IdeasCore
-          boardId={boards[0].id}
-          render={(ideas: ?Array<Idea>) =>
-            ideas ? (
-              ideas.map((idea: Idea) => <li>{idea.name}</li>)
-            ) : (
-              <p>No ideas</p>
-            )
-          }
-        />
+        {this.state.currentBoard && (
+          <div>
+            <h2>Ideas for {this.state.currentBoard.name}</h2>
+            <IdeasCore
+              boardId={this.state.currentBoard.id}
+              render={(ideas: ?Array<Idea>) =>
+                ideas ? (
+                  ideas.length ? (
+                    ideas.map((idea: Idea) => (
+                      <li key={idea.id}>{idea.name}</li>
+                    ))
+                  ) : (
+                    <p>No ideas</p>
+                  )
+                ) : (
+                  <p>Loading...</p>
+                )
+              }
+            />
+          </div>
+        )}
       </div>
     )
   }
