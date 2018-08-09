@@ -1,13 +1,13 @@
 import React from "react"
 import { getComponentDisplayName } from "../helpers/getComponentDisplayName"
-import { BoardsContext, type WithBoards } from "../stores/BoardsProvider"
+import { BoardsContext, type BoardsStoreType } from "../stores/BoardsProvider"
 
 const withBoards = (WrappedComponent) => {
   class withBoards extends React.Component {
     render() {
       return (
         <BoardsContext.Consumer>
-          {(boardsStore: WithBoards) => (
+          {(boardsStore: BoardsStoreType) => (
             <WrappedComponent {...this.props} boardsStore={boardsStore} />
           )}
         </BoardsContext.Consumer>

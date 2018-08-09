@@ -2,6 +2,7 @@
 import * as React from "react"
 import { AuthFacade } from "../facades/AuthFacade"
 import { FirebaseUser } from "../models/FirebaseUser"
+import { User } from "../models/User"
 
 const AuthContext = React.createContext()
 
@@ -10,7 +11,7 @@ type AuthProviderProps = {
 }
 
 type AuthProviderState = {
-  authUser: ?FirebaseUser,
+  authUser: ?User,
 }
 
 class AuthProvider extends React.PureComponent<
@@ -26,7 +27,7 @@ class AuthProvider extends React.PureComponent<
   componentDidMount() {
     AuthFacade.onAuthStateChanged((authUser) => {
       authUser
-        ? this.setState({ authUser: new FirebaseUser(authUser) })
+        ? this.setState({ authUser: new FirebaseUser(authUser).toUser() })
         : this.setState({ authUser: null })
     })
   }

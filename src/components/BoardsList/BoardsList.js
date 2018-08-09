@@ -1,12 +1,12 @@
 // @flow
 import * as React from "react"
 import { withBoards } from "../../hoc/withBoards"
-import type { WithBoards } from "../../stores/BoardsProvider"
+import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { Board } from "../../models/Board"
 import { IdeasList } from "../IdeasList/IdeasList"
 
 type BoardsListProps = {
-  boardsStore: WithBoards,
+  boardsStore: BoardsStoreType,
 }
 
 type BoardsListState = {
@@ -21,7 +21,8 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
   }
 
   render() {
-    const { boards } = this.props.boardsStore
+    const { boardsStore } = this.props
+    const { boards } = boardsStore
     if (!boards) {
       return <div>Loading...</div>
     }
@@ -30,15 +31,14 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
         {boards.map((board: Board) => (
           <li
             key={board.id}
-            onClick={() => this.setState({ currentBoard: board })}
+            onClick={() => boardsStore.setActiveBoard(board.id)}
           >
             {board.name}
+            {boardsStore.currentBoard &&
+              boardsStore.currentBoard.id === board.id &&
+              "<active>"}
           </li>
         ))}
-
-        {this.state.currentBoard && (
-          <IdeasList board={this.state.currentBoard} />
-        )}
       </div>
     )
   }

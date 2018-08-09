@@ -2,12 +2,12 @@
 import * as React from "react"
 import { Board } from "../../models/Board"
 import { withAuth } from "../../hoc/withAuth"
-import { FirebaseUser } from "../../models/FirebaseUser"
 import { BoardsFacade } from "../../facades/BoardsFacade"
 import { BOARD_ROLES } from "../../constants/firebase"
+import { User } from "../../models/User"
 
 type BoardCreateProps = {
-  authUser: FirebaseUser,
+  authUser: User,
 }
 
 type BoardCreateState = {
@@ -68,7 +68,7 @@ class BoardCreate extends React.PureComponent<
     )
     const board = new Board({
       name: this.state.name,
-      ownerId: this.props.authUser.uid,
+      ownerId: this.props.authUser.id,
       roles,
     })
     BoardsFacade.createBoard(board)

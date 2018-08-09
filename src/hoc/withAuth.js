@@ -1,7 +1,7 @@
 import React from "react"
 import { getComponentDisplayName } from "../helpers/getComponentDisplayName"
 import { AuthContext } from "../stores/AuthProvider"
-import { FirebaseUser } from "../models/FirebaseUser"
+import { User } from "../models/User"
 
 const withAuth = (WrappedComponent) => {
   class withAuth extends React.Component {
@@ -16,7 +16,7 @@ const withAuth = (WrappedComponent) => {
     render() {
       return (
         <AuthContext.Consumer>
-          {(authUser: ?FirebaseUser) =>
+          {(authUser: ?User) =>
             authUser ? (
               <WrappedComponent {...this.props} authUser={authUser} />
             ) : null

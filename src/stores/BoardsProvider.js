@@ -1,22 +1,22 @@
 // @flow
 import * as React from "react"
-import { withAuth } from "../hoc/withAuth"
 import { db } from "../facades/FirebaseFacade"
-import { FirebaseUser } from "../models/FirebaseUser"
 import { Board } from "../models/Board"
 import { FieldPath } from "../helpers/firebaseUtils"
 import * as Rx from "rxjs/Rx"
 import { BOARD_ROLES, COLLECTIONS } from "../constants/firebase"
+import { type RouterHistory } from "react-router-dom"
+import { AuthFacade } from "../facades/AuthFacade"
 
 const BoardsContext = React.createContext()
 
 type BoardsProviderProps = {
-  authUser: FirebaseUser,
   children: ?React.Node,
 }
 
 type BoardsProviderState = {
   boards: ?Array<Board>,
+  currentBoard: ?Board,
 }
 
 class BoardsProvider extends React.PureComponent<
@@ -27,14 +27,29 @@ class BoardsProvider extends React.PureComponent<
 
   state = {
     boards: null,
+    currentBoard: null,
   }
 
   unsubscribeFunctions: Array<Function> = []
 
   componentDidMount() {
+    this.subscribe()
+    AuthFacade.onAuthStateChanged(this.subscribe)
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
+  subscribe = () => {
+    const user = AuthFacade.getCurrentUser()
+    if (!user) {
+      return
+    }
+    this.unsubscribe()
     const collection = db.collection(COLLECTIONS.BOARDS)
-    const userId = this.props.authUser.uid
-    const emailPath = new FieldPath("roles", this.props.authUser.email)
+    const userId = user.id
+    const emailPath = new FieldPath("roles", user.email)
     const ownedRef = collection.where("ownerId", "==", userId)
     const adminRef = collection.where(emailPath, "==", BOARD_ROLES.ADMIN)
     const editorRef = collection.where(emailPath, "==", BOARD_ROLES.EDITOR)
@@ -55,14 +70,15 @@ class BoardsProvider extends React.PureComponent<
       (boardsContainers: Array<Array<Board>>) => {
         console.log("Boards updated")
         const boards: Array<Board> = [].concat.apply([], [...boardsContainers])
-        this.setState({ boards })
+        const currentBoard = this.state.currentBoard || boards[0]
+        this.setState({ boards, currentBoard })
       }
     )
   }
 
-  componentWillUnmount() {
-    this.unsubscribeFunctions.forEach((unsubscribe: Function) => {
-      unsubscribe()
+  unsubscribe = () => {
+    this.unsubscribeFunctions.forEach((unsubscribeFn: Function) => {
+      unsubscribeFn()
     })
   }
 
@@ -81,15 +97,38 @@ class BoardsProvider extends React.PureComponent<
       rxSubject$.next(boards)
     })
 
+  setActiveBoard = (boardId: string): void => {
+    const boards = this.state.boards
+    if (!boards) {
+      throw new Error("No board found with given boardId")
+    }
+    const foundBoards: Array<Board> = boards.filter(
+      (board: Board) => board.id === boardId
+    )
+    if (!foundBoards.length) {
+      throw new Error("No board found with given boardId")
+    }
+    const currentBoard = foundBoards[0]
+    this.setState({ currentBoard })
+  }
+
   render() {
+    const boardStore: BoardsStoreType = {
+      ...this.state,
+      setActiveBoard: this.setActiveBoard,
+    }
     return (
-      <BoardsContext.Provider value={this.state}>
+      <BoardsContext.Provider value={boardStore}>
         {this.props.children}
       </BoardsContext.Provider>
     )
   }
 }
 
-BoardsProvider = withAuth(BoardsProvider)
-export type WithBoards = BoardsProviderState
+export type BoardsStoreType = {
+  boards: ?Array<Board>,
+  currentBoard: ?Board,
+  setActiveBoard: (string) => void,
+}
+
 export { BoardsProvider, BoardsContext }

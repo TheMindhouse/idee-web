@@ -1,18 +1,22 @@
 // @flow
 import * as React from "react"
 import { Idea } from "../../models/Idea"
-import { Board } from "../../models/Board"
 import { IdeasCore } from "../../hoc/renderProps/IdeasCore"
+import { withBoards } from "../../hoc/withBoards"
+import type { BoardsStoreType } from "../../stores/BoardsProvider"
 
 type IdeasListProps = {
-  board: Board,
+  boardsStore: BoardsStoreType,
 }
 
 class IdeasList extends React.PureComponent<IdeasListProps> {
   static defaultProps = {}
 
   render() {
-    const { board } = this.props
+    const board = this.props.boardsStore.currentBoard
+    if (!board) {
+      return null
+    }
     return (
       <div>
         <h2>Ideas for {board.name}</h2>
@@ -35,4 +39,5 @@ class IdeasList extends React.PureComponent<IdeasListProps> {
   }
 }
 
+IdeasList = withBoards(IdeasList)
 export { IdeasList }

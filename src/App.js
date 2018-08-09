@@ -2,7 +2,7 @@
 import React, { Component } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import ScrollToTop from "react-router-scroll-top"
-import { AppHomepage } from "./routes/AppHomepage"
+import { BoardPage } from "./routes/BoardPage"
 import { URLHelper } from "./helpers/URLHelper"
 import { SignIn } from "./routes/SignIn"
 import { AuthProvider } from "./stores/AuthProvider"
@@ -33,12 +33,17 @@ class App extends Component<{}> {
               <div className="AppContent">
                 <Route path="/" component={logPageView} />
                 <Switch>
+                  <Route exact path={URLHelper.login} component={SignIn} />
                   <Route
                     exact
                     path={URLHelper.homepage}
-                    component={AppHomepage}
+                    component={BoardPage}
                   />
-                  <Route exact path={URLHelper.login} component={SignIn} />
+                  <Route
+                    exact
+                    path={URLHelper.board(":boardId")}
+                    component={BoardPage}
+                  />
                   {/*<Route path="/404" component={ErrorPage404} />*/}
                   {/*<Route component={ErrorPage404} />*/}
                 </Switch>
