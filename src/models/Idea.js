@@ -1,12 +1,12 @@
 // @flow
 type IdeaProps = {
-  id: string,
+  id?: string,
   boardId: string,
-  name: string,
-  description: ?string,
-  ease: number,
-  confidence: number,
-  impact: number,
+  name?: string,
+  description?: ?string,
+  ease?: number,
+  confidence?: number,
+  impact?: number,
 }
 export class Idea {
   id: string
@@ -18,17 +18,17 @@ export class Idea {
   impact: number
 
   constructor(props: IdeaProps) {
-    this.id = props.id
+    this.id = props.id || ""
     this.boardId = props.boardId
-    this.name = props.name
-    this.description = props.description || null
-    this.ease = props.ease
-    this.confidence = props.confidence
-    this.impact = props.impact
+    this.name = props.name || ""
+    this.description = props.description || ""
+    this.ease = props.ease === 0 ? 0 : props.ease || 5
+    this.confidence = props.confidence === 0 ? 0 : props.confidence || 5
+    this.impact = props.impact === 0 ? 0 : props.impact || 5
   }
 
   getAverage(): number {
-    return (this.ease + this.confidence + this.impact) / 3
+    return Math.round((this.ease + this.confidence + this.impact) / 3)
   }
 
   toExport() {

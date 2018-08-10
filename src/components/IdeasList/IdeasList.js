@@ -4,6 +4,7 @@ import { Idea } from "../../models/Idea"
 import { IdeasCore } from "../../hoc/renderProps/IdeasCore"
 import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
+import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -34,6 +35,7 @@ class IdeasList extends React.PureComponent<IdeasListProps> {
             )
           }
         />
+        <IdeaCreate boardId={board.id} />
       </div>
     )
   }

@@ -23,7 +23,7 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
 
   render() {
     return (
-      <div>
+      <div style={{ display: "flex" }}>
         <Sidebar />
         <IdeasList />
       </div>
