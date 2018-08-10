@@ -14,17 +14,18 @@ class Sidebar extends React.PureComponent<SidebarProps> {
   static defaultProps = {}
 
   render() {
+    const { authUser } = this.props
     return (
       <div className="Sidebar">
         <img
-          src={this.props.authUser.avatarUrl}
+          src={authUser.avatarUrl}
           style={{ maxWidth: 100, borderRadius: "100%" }}
         />
-        <h1>Welcome {this.props.authUser.name}!</h1>
+        <h1>Welcome {authUser.name}!</h1>
         <button onClick={AuthFacade.signOut}>Sign out</button>
         <div className="SidebarContent">
           <div className="SidebarContent__BoardsList">
-            <BoardsList />
+            <BoardsList userId={authUser.id} />
           </div>
           <div className="SidebarContent__CreateBoard">
             <button>Create board</button>

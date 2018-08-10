@@ -3,9 +3,9 @@ import * as React from "react"
 import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { Board } from "../../models/Board"
-import { IdeasList } from "../IdeasList/IdeasList"
 
 type BoardsListProps = {
+  userId: string,
   boardsStore: BoardsStoreType,
 }
 
@@ -21,7 +21,7 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
   }
 
   render() {
-    const { boardsStore } = this.props
+    const { boardsStore, userId } = this.props
     const { boards } = boardsStore
     if (!boards) {
       return <div>Loading...</div>
@@ -33,6 +33,7 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
             key={board.id}
             onClick={() => boardsStore.setActiveBoard(board.id)}
           >
+            {!board.isOwner(userId) && "*** "}
             {board.name}
             {boardsStore.currentBoard &&
               boardsStore.currentBoard.id === board.id &&

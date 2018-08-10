@@ -23,6 +23,14 @@ export class Board {
     this.roles = props.roles || {}
   }
 
+  isOwner(userId: string) {
+    return userId === this.ownerId
+  }
+
+  isShared() {
+    return Object.keys(this.roles).length > 0
+  }
+
   toExport() {
     const obj = { ...this }
     // Remove private fields
