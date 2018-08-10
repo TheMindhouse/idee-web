@@ -7,6 +7,7 @@ import { URLHelper } from "./helpers/URLHelper"
 import { SignIn } from "./routes/SignIn"
 import { AuthProvider } from "./stores/AuthProvider"
 import { BoardsProvider } from "./stores/BoardsProvider"
+import { ProtectedRoute } from "./routes/ProtectedRoute"
 // import ReactGA from "react-ga"
 // import { hotjar } from "react-hotjar"
 
@@ -34,16 +35,18 @@ class App extends Component<{}> {
                 <Route path="/" component={logPageView} />
                 <Switch>
                   <Route exact path={URLHelper.login} component={SignIn} />
-                  <Route
-                    exact
-                    path={URLHelper.homepage}
-                    component={BoardPage}
-                  />
-                  <Route
-                    exact
-                    path={URLHelper.board(":boardId")}
-                    component={BoardPage}
-                  />
+                  <ProtectedRoute>
+                    <Route
+                      exact
+                      path={URLHelper.homepage}
+                      component={BoardPage}
+                    />
+                    <Route
+                      exact
+                      path={URLHelper.board(":boardId")}
+                      component={BoardPage}
+                    />
+                  </ProtectedRoute>
                   {/*<Route path="/404" component={ErrorPage404} />*/}
                   {/*<Route component={ErrorPage404} />*/}
                 </Switch>

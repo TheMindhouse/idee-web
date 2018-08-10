@@ -1,15 +1,13 @@
 // @flow
 import * as React from "react"
-import { withAuth } from "../hoc/withAuth"
 import { Sidebar } from "../components/Sidebar/Sidebar"
-import { User } from "../models/User"
 import { Board } from "../models/Board"
-import { type Match } from "react-router-dom"
+import { type Match, type RouterHistory, withRouter } from "react-router-dom"
 import { IdeasList } from "../components/IdeasList/IdeasList"
 
 type BoardPageProps = {
-  authUser: User,
   match: Match,
+  history: RouterHistory,
 }
 
 type BoardPageState = {
@@ -18,8 +16,6 @@ type BoardPageState = {
 
 class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
   static defaultProps = {}
-
-  componentDidMount() {}
 
   render() {
     return (
@@ -31,5 +27,5 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
   }
 }
 
-BoardPage = withAuth(BoardPage)
+BoardPage = withRouter(BoardPage)
 export { BoardPage }

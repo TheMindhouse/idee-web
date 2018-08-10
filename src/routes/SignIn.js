@@ -5,6 +5,7 @@ import GoogleButton from "react-google-button"
 import { AuthFacade } from "../facades/AuthFacade"
 import { User } from "../models/User"
 import { URLHelper } from "../helpers/URLHelper"
+import ideeLogo from "../assets/images/idee_logo.svg"
 
 type SignInProps = {
   history: RouterHistory,
@@ -29,7 +30,12 @@ class SignIn extends React.PureComponent<SignInProps> {
 
   render() {
     return (
-      <div>
+      <div className="FullColorPage">
+        <img
+          src={ideeLogo}
+          alt="idée - write it down"
+          className="FullColorPage__Logo"
+        />
         <GoogleButton onClick={this.signInWithGoogle} />
       </div>
     )

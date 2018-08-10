@@ -5,14 +5,6 @@ import { User } from "../models/User"
 
 const withAuth = (WrappedComponent) => {
   class withAuth extends React.Component {
-    // componentDidMount() {
-    //   AuthFacade.onAuthStateChanged((authUser) => {
-    //     if (!authUser) {
-    //       this.props.history.push(URLHelper.login)
-    //     }
-    //   })
-    // }
-
     render() {
       return (
         <AuthContext.Consumer>
