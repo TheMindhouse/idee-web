@@ -4,6 +4,7 @@ import { BoardsList } from "../BoardsList/BoardsList"
 import { AuthFacade } from "../../facades/AuthFacade"
 import { withAuth } from "../../hoc/withAuth"
 import { User } from "../../models/User"
+import "./styles/Sidebar.css"
 
 type SidebarProps = {
   authUser: User,
@@ -14,10 +15,21 @@ class Sidebar extends React.PureComponent<SidebarProps> {
 
   render() {
     return (
-      <div>
+      <div className="Sidebar">
+        <img
+          src={this.props.authUser.avatarUrl}
+          style={{ maxWidth: 100, borderRadius: "100%" }}
+        />
         <h1>Welcome {this.props.authUser.name}!</h1>
         <button onClick={AuthFacade.signOut}>Sign out</button>
-        <BoardsList />
+        <div className="SidebarContent">
+          <div className="SidebarContent__BoardsList">
+            <BoardsList />
+          </div>
+          <div className="SidebarContent__CreateBoard">
+            <button>Create board</button>
+          </div>
+        </div>
       </div>
     )
   }

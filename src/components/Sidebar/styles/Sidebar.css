@@ -1,0 +1,21 @@
+.Sidebar {
+    width: 270px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.SidebarContent {
+    height: 100%;
+    background: linear-gradient(45deg, #00e7e4, #5feb72, #bfef00);
+    display: flex;
+    flex-direction: column;
+}
+
+.SidebarContent__BoardsList {
+    height: 100%;
+}
+
+.SidebarContent__CreateBoard {
+    margin: 20px;
+}
