@@ -5,6 +5,7 @@ import { IdeasCore } from "../../hoc/renderProps/IdeasCore"
 import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
+import { IdeasListItem } from "./IdeasListItem"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -19,14 +20,16 @@ class IdeasList extends React.PureComponent<IdeasListProps> {
       return null
     }
     return (
-      <div>
-        <h2>Ideas for {board.name}</h2>
+      <div style={{ padding: 30 }}>
+        <h1>{board.name}</h1>
         <IdeasCore
           boardId={board.id}
           render={(ideas: ?Array<Idea>) =>
             ideas ? (
               ideas.length ? (
-                ideas.map((idea: Idea) => <li key={idea.id}>{idea.name}</li>)
+                ideas.map((idea: Idea) => (
+                  <IdeasListItem idea={idea} key={idea.id} />
+                ))
               ) : (
                 <p>No ideas</p>
               )

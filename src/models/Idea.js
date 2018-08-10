@@ -22,9 +22,10 @@ export class Idea {
     this.boardId = props.boardId
     this.name = props.name || ""
     this.description = props.description || ""
-    this.ease = props.ease === 0 ? 0 : props.ease || 5
-    this.confidence = props.confidence === 0 ? 0 : props.confidence || 5
-    this.impact = props.impact === 0 ? 0 : props.impact || 5
+    this.ease = props.ease === 0 ? 0 : parseInt(props.ease, 10) || 5
+    this.confidence =
+      props.confidence === 0 ? 0 : parseInt(props.confidence, 10) || 5
+    this.impact = props.impact === 0 ? 0 : parseInt(props.impact, 10) || 5
   }
 
   getAverage(): number {
