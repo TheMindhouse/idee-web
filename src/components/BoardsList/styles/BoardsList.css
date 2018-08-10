@@ -1,0 +1,30 @@
+.BoardsList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.BoardsList__Item {
+    font-weight: 400;
+    font-size: 16px;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    border-right: 5px solid transparent;
+}
+
+.BoardsList__Item--active {
+    border-right: 5px solid;
+    font-weight: bold;
+}
+
+.BoardsList__Item:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.BoardsList__ItemShared {
+    position: absolute;
+    right: 15px;
+    font-size: 10px;
+}

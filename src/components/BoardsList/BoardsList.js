@@ -3,6 +3,7 @@ import * as React from "react"
 import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { Board } from "../../models/Board"
+import "./styles/BoardsList.css"
 
 type BoardsListProps = {
   userId: string,
@@ -27,20 +28,25 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
       return <div>Loading...</div>
     }
     return (
-      <div>
+      <ul className="BoardsList">
         {boards.map((board: Board) => (
           <li
             key={board.id}
+            className={`BoardsList__Item ${
+              boardsStore.currentBoard &&
+              boardsStore.currentBoard.id === board.id
+                ? "BoardsList__Item--active"
+                : ""
+            }`}
             onClick={() => boardsStore.setActiveBoard(board.id)}
           >
-            {!board.isOwner(userId) && "*** "}
             {board.name}
-            {boardsStore.currentBoard &&
-              boardsStore.currentBoard.id === board.id &&
-              "<active>"}
+            {!board.isOwner(userId) && (
+              <span className="BoardsList__ItemShared">SHARED</span>
+            )}
           </li>
         ))}
-      </div>
+      </ul>
     )
   }
 }
