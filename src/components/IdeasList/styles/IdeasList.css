@@ -3,3 +3,7 @@
     max-width: 100%;
     padding: 30px;
 }
+
+.IdeasList__BoardName {
+    font-size: 45px;
+}

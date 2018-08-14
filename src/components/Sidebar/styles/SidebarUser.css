@@ -1,0 +1,29 @@
+.SidebarUser {
+    padding: 20px;
+}
+
+.SidebarUser__Avatar {
+    border-radius: 100%;
+    width: 80px;
+}
+
+.SidebarUser__Content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.SidebarUser__Name {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.SidebarUser__Email {
+    font-size: 13px;
+}
+
+.SidebarUser__Menu {
+    width: 20px;
+    flex-shrink: 0;
+}

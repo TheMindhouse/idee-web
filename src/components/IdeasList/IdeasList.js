@@ -70,7 +70,7 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
     const { sortDesc, sortBy } = this.state
     return (
       <div className="IdeasList">
-        <h1>{board.name}</h1>
+        <h1 className="IdeasList__BoardName">{board.name}</h1>
         <IdeasListHeader
           sortBy={sortBy}
           sortDesc={sortDesc}

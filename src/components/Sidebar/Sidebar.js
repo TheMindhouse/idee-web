@@ -1,10 +1,10 @@
 // @flow
 import * as React from "react"
 import { BoardsList } from "../BoardsList/BoardsList"
-import { AuthFacade } from "../../facades/AuthFacade"
 import { withAuth } from "../../hoc/withAuth"
 import { User } from "../../models/User"
 import "./styles/Sidebar.css"
+import { SidebarUser } from "./SidebarUser"
 
 type SidebarProps = {
   authUser: User,
@@ -17,12 +17,7 @@ class Sidebar extends React.PureComponent<SidebarProps> {
     const { authUser } = this.props
     return (
       <div className="Sidebar">
-        <img
-          src={authUser.avatarUrl}
-          style={{ maxWidth: 100, borderRadius: "100%" }}
-        />
-        <h1>Welcome {authUser.name}!</h1>
-        <button onClick={AuthFacade.signOut}>Sign out</button>
+        <SidebarUser />
         <div className="SidebarContent">
           <div className="SidebarContent__BoardsList">
             <BoardsList userId={authUser.id} />
