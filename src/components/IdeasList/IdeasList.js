@@ -6,6 +6,7 @@ import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
 import { IdeasListItem } from "./IdeasListItem"
+import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -57,17 +58,36 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
 
   switchDirection = () => this.setState({ sortDesc: !this.state.sortDesc })
 
+  changeSortMethod = (event: SyntheticEvent<HTMLInputElement>) =>
+    this.setState({ sortBy: event.currentTarget.value })
+
   render() {
     const board = this.props.boardsStore.currentBoard
     if (!board) {
       return null
     }
+    const { sortDesc, sortBy } = this.state
     return (
       <div style={{ padding: 30 }}>
         <h1>{board.name}</h1>
-        {this.state.sortBy} -{" "}
+        <select onChange={this.changeSortMethod}>
+          {Object.keys(SORT_METHODS).map((method) => (
+            <option
+              value={SORT_METHODS[method]}
+              selected={sortBy === SORT_METHODS[method]}
+            >
+              {SORT_METHODS[method]}
+            </option>
+          ))}
+        </select>
         <p onClick={this.switchDirection}>
-          {this.state.sortDesc ? "DESC" : "ASC"}
+          <Element
+            icon={ELEMENTS.sort}
+            size={ELEMENTS_SIZE.small}
+            style={{
+              transform: `rotate(${sortDesc ? 0 : "180deg"})`,
+            }}
+          />
         </p>
         <IdeasCore
           boardId={board.id}

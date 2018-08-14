@@ -17,6 +17,8 @@ type ElementProps = {
   icon: string,
   size?: string,
   width?: string,
+  className?: string,
+  style?: Object,
 }
 
 export const ELEMENTS = {
@@ -44,7 +46,15 @@ export const ELEMENTS_SIZE = {
 const Element = (props: ElementProps) => {
   const getWidth = () => (props.width ? props.width : props.size)
 
-  return <img src={props.icon} style={{ width: getWidth() }} />
+  return (
+    <img
+      src={props.icon}
+      style={{ width: getWidth(), ...props.style }}
+      alt="icon"
+      className={props.className}
+      aria-hidden="true"
+    />
+  )
 }
 
 Element.defaultProps = {
