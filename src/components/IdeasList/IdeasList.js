@@ -6,7 +6,8 @@ import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
 import { IdeasListItem } from "./IdeasListItem"
-import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
+import { IdeasListHeader } from "./IdeasListHeader"
+import "./styles/IdeasList.css"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -17,7 +18,7 @@ type IdeasListState = {
   sortDesc: boolean,
 }
 
-const SORT_METHODS = {
+export const SORT_METHODS = {
   AVERAGE: "average",
   EASE: "ease",
   CONFIDENCE: "confidence",
@@ -56,10 +57,10 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   sortFunction = (a: Idea, b: Idea): number =>
     this.getSortDirection(this.getSortValue(a), this.getSortValue(b))
 
-  switchDirection = () => this.setState({ sortDesc: !this.state.sortDesc })
+  changeSortDirection = () => this.setState({ sortDesc: !this.state.sortDesc })
 
-  changeSortMethod = (event: SyntheticEvent<HTMLInputElement>) =>
-    this.setState({ sortBy: event.currentTarget.value })
+  changeSortMethod = (event: SyntheticEvent<HTMLInputElement>, data) =>
+    this.setState({ sortBy: data.value })
 
   render() {
     const board = this.props.boardsStore.currentBoard
@@ -68,27 +69,14 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
     }
     const { sortDesc, sortBy } = this.state
     return (
-      <div style={{ padding: 30 }}>
+      <div className="IdeasList">
         <h1>{board.name}</h1>
-        <select onChange={this.changeSortMethod}>
-          {Object.keys(SORT_METHODS).map((method) => (
-            <option
-              value={SORT_METHODS[method]}
-              selected={sortBy === SORT_METHODS[method]}
-            >
-              {SORT_METHODS[method]}
-            </option>
-          ))}
-        </select>
-        <p onClick={this.switchDirection}>
-          <Element
-            icon={ELEMENTS.sort}
-            size={ELEMENTS_SIZE.small}
-            style={{
-              transform: `rotate(${sortDesc ? 0 : "180deg"})`,
-            }}
-          />
-        </p>
+        <IdeasListHeader
+          sortBy={sortBy}
+          sortDesc={sortDesc}
+          changeSortMethod={this.changeSortMethod}
+          changeSortDirection={this.changeSortDirection}
+        />
         <IdeasCore
           boardId={board.id}
           render={(ideas: ?Array<Idea>) =>

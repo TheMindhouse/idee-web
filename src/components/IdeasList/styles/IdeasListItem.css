@@ -1,14 +1,9 @@
 .IdeasListItem {
     display: flex;
     align-items: center;
-    width: 600px;
-    max-width: 100%;
+    width: 100%;
     border-bottom: 2px solid;
     padding: 10px 0;
-}
-
-.IdeasListItem:first-of-type {
-    border-top: 2px solid;
 }
 
 .IdeasListItem__Name {

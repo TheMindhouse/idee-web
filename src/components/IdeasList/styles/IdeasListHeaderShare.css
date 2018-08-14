@@ -1,0 +1,9 @@
+.IdeasListHeaderShare {
+    display: flex;
+    align-items: center;
+    color: #999;
+}
+
+.IdeasListHeaderShare__Text {
+    margin-right: 10px;
+}
