@@ -5,9 +5,11 @@ import { withAuth } from "../../hoc/withAuth"
 import { BoardsFacade } from "../../facades/BoardsFacade"
 import { BOARD_ROLES } from "../../constants/firebase"
 import { User } from "../../models/User"
+import { Button, Modal } from "semantic-ui-react"
 
 type BoardCreateProps = {
   authUser: User,
+  onClose: Function,
 }
 
 type BoardCreateState = {
@@ -79,22 +81,38 @@ class BoardCreate extends React.PureComponent<
   }
 
   render() {
+    const { onClose } = this.props
     return (
-      <div>
-        <h2>Add board</h2>
-        <p>Name:</p>
-        <input onChange={this.onChangeName} />
-        <p>Share To:</p>
-        <input onKeyPress={this.handleKeyPress} />
-        <ul>
-          {this.state.shareToEmails.map((email: string, index: number) => (
-            <li key={email} onClick={() => this.removeShareToEmail(index)}>
-              {email}
-            </li>
-          ))}
-        </ul>
-        <button onClick={this.onSave}>Save</button>
-      </div>
+      <Modal centered={false} onClose={onClose} open={true} size="small">
+        <Modal.Header>Create new board</Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            <p>Name:</p>
+            <input onChange={this.onChangeName} />
+            <p>Share To:</p>
+            <input onKeyPress={this.handleKeyPress} />
+            <ul>
+              {this.state.shareToEmails.map((email: string, index: number) => (
+                <li key={email} onClick={() => this.removeShareToEmail(index)}>
+                  {email}
+                </li>
+              ))}
+            </ul>
+          </Modal.Description>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={onClose} secondary>
+            Cancel
+          </Button>
+          <Button
+            onClick={this.onSave}
+            positive
+            labelPosition="right"
+            icon="checkmark"
+            content="Save"
+          />
+        </Modal.Actions>
+      </Modal>
     )
   }
 }

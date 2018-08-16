@@ -5,16 +5,18 @@ import { withAuth } from "../../hoc/withAuth"
 import { User } from "../../models/User"
 import "./styles/Sidebar.css"
 import { SidebarUser } from "./SidebarUser"
+import { Element, ELEMENTS } from "../Element/Element"
 
 type SidebarProps = {
   authUser: User,
+  onCreateBoardClick: Function,
 }
 
 class Sidebar extends React.PureComponent<SidebarProps> {
   static defaultProps = {}
 
   render() {
-    const { authUser } = this.props
+    const { authUser, onCreateBoardClick } = this.props
     return (
       <div className="Sidebar">
         <SidebarUser />
@@ -23,7 +25,13 @@ class Sidebar extends React.PureComponent<SidebarProps> {
             <BoardsList userId={authUser.id} />
           </div>
           <div className="SidebarContent__CreateBoard">
-            <button>Create board</button>
+            <button
+              onClick={onCreateBoardClick}
+              className="SidebarContent__CreateBoardButton"
+            >
+              <Element icon={ELEMENTS.plus} />
+              <span>create new board</span>
+            </button>
           </div>
         </div>
       </div>
