@@ -6,6 +6,8 @@ import { BoardsFacade } from "../../facades/BoardsFacade"
 import { BOARD_ROLES } from "../../constants/firebase"
 import { User } from "../../models/User"
 import { Button, Modal } from "semantic-ui-react"
+import { FormField } from "../Forms/FormField"
+import { isValidEmail } from "../../helpers/strings"
 
 type BoardCreateProps = {
   authUser: User,
@@ -15,6 +17,7 @@ type BoardCreateProps = {
 type BoardCreateState = {
   name: string,
   shareToEmails: Array<string>,
+  emailInvalidError: boolean,
 }
 
 class BoardCreate extends React.PureComponent<
@@ -26,6 +29,7 @@ class BoardCreate extends React.PureComponent<
   state = {
     name: "",
     shareToEmails: [],
+    emailInvalidError: false,
   }
 
   onChangeName = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -49,11 +53,15 @@ class BoardCreate extends React.PureComponent<
   }
 
   handleKeyPress = (event: any) => {
+    this.setState({ emailInvalidError: false })
     if (event.key === "Enter") {
-      console.log("enter key pressed")
       const email = event.currentTarget.value
-      this.addShareToEmail(email)
-      event.currentTarget.value = ""
+      if (isValidEmail(email)) {
+        this.addShareToEmail(email)
+        event.currentTarget.value = ""
+      } else {
+        this.setState({ emailInvalidError: true })
+      }
     }
   }
 
@@ -87,10 +95,18 @@ class BoardCreate extends React.PureComponent<
         <Modal.Header>Create new board</Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            <p>Name:</p>
-            <input onChange={this.onChangeName} />
-            <p>Share To:</p>
-            <input onKeyPress={this.handleKeyPress} />
+            <FormField label="Board name">
+              <input type="text" onChange={this.onChangeName} autoFocus />
+            </FormField>
+
+            <FormField
+              label="E-mail address to share"
+              error={this.state.emailInvalidError}
+            >
+              <input type="text" onKeyPress={this.handleKeyPress} />
+              <FormField.FormError message="Enter a valid e-mail address" />
+            </FormField>
+
             <ul>
               {this.state.shareToEmails.map((email: string, index: number) => (
                 <li key={email} onClick={() => this.removeShareToEmail(index)}>

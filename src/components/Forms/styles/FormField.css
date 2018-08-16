@@ -1,0 +1,51 @@
+.FormField {
+    position: relative;
+    font-family: 'Catamaran', sans-serif;
+    margin-bottom: 10px;
+}
+
+.FormField__Label {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #999;
+    transition: all ease-in-out 0.2s;
+}
+
+.FormField:focus-within .FormField__Label {
+    color: #27127c;
+}
+
+.FormField input,
+.FormField textarea {
+    padding: 30px 10px 10px;
+    background: #f0eef5;
+    color: #27127c;
+    border: 0;
+    outline: none;
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    width: 100%;
+    border-bottom: 3px solid transparent;
+}
+
+/** ################ ERROR FIELD ################# */
+
+.FormField--error input {
+    border-bottom: 3px solid #e74c3c;
+}
+
+.FormField--error .FormField__Error {
+    display: block;
+}
+
+.FormField__Error {
+    display: none;
+    font-weight: bold;
+    font-size: 13px;
+    color: #e74c3c;
+    margin: 3px 10px;
+}
