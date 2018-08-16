@@ -22,6 +22,8 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
     currentBoard: null,
   }
 
+  sortBoards = (a: Board, b: Board): number => a.name.localeCompare(b.name)
+
   render() {
     const { boardsStore, userId } = this.props
     const { boards } = boardsStore
@@ -30,7 +32,7 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
     }
     return (
       <ul className="BoardsList">
-        {boards.map((board: Board) => (
+        {boards.sort(this.sortBoards).map((board: Board) => (
           <li
             key={board.id}
             className={`BoardsList__Item ${
