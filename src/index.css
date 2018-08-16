@@ -29,3 +29,7 @@ h1, h2, h3, h4, h5 {
   max-width: 80vw;
   margin-bottom: 100px;
 }
+
+.text-center {
+  text-align: center;
+}

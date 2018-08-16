@@ -8,16 +8,21 @@ import { User } from "../../models/User"
 import { Button, Modal } from "semantic-ui-react"
 import { FormField } from "../Forms/FormField"
 import { isValidEmail } from "../../helpers/strings"
+import { SharedUser } from "../SharedUser/SharedUser"
+import type { BoardsStoreType } from "../../stores/BoardsProvider"
 
 type BoardCreateProps = {
   authUser: User,
-  onClose: Function,
+  boardsStore: BoardsStoreType,
+  onClose: () => void,
+  onSave: (string) => void,
 }
 
 type BoardCreateState = {
   name: string,
   shareToEmails: Array<string>,
   emailInvalidError: boolean,
+  isSaving: boolean,
 }
 
 class BoardCreate extends React.PureComponent<
@@ -30,6 +35,7 @@ class BoardCreate extends React.PureComponent<
     name: "",
     shareToEmails: [],
     emailInvalidError: false,
+    isSaving: false,
   }
 
   onChangeName = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -66,6 +72,7 @@ class BoardCreate extends React.PureComponent<
   }
 
   onSave = () => {
+    this.setState({ isSaving: true })
     const shareToEmails: Array<string> = [...this.state.shareToEmails]
     // Convert list of e-mails to "role" object.
     // Currently we only support "idea_editor" role.
@@ -82,16 +89,21 @@ class BoardCreate extends React.PureComponent<
       roles,
     })
     BoardsFacade.createBoard(board)
-      .then(() => {
+      .then((docRef: $npm$firebase$firestore$DocumentReference) => {
         console.log("Added new board")
+        this.props.onSave(docRef.id)
       })
-      .catch((error) => console.error("Error adding board: ", error))
+      .catch((error) => {
+        console.error("Error adding board: ", error)
+        this.setState({ isSaving: false })
+      })
   }
 
   render() {
     const { onClose } = this.props
+    const { shareToEmails, isSaving } = this.state
     return (
-      <Modal centered={false} onClose={onClose} open={true} size="small">
+      <Modal centered={false} onClose={onClose} open={true} size="tiny">
         <Modal.Header>Create new board</Modal.Header>
         <Modal.Content>
           <Modal.Description>
@@ -106,14 +118,20 @@ class BoardCreate extends React.PureComponent<
               <input type="text" onKeyPress={this.handleKeyPress} />
               <FormField.FormError message="Enter a valid e-mail address" />
             </FormField>
-
-            <ul>
-              {this.state.shareToEmails.map((email: string, index: number) => (
-                <li key={email} onClick={() => this.removeShareToEmail(index)}>
-                  {email}
-                </li>
-              ))}
-            </ul>
+            {shareToEmails.map((email: string, index: number) => (
+              <SharedUser
+                email={email}
+                key={email}
+                onRemove={() => this.removeShareToEmail(index)}
+              />
+            ))}
+            {!shareToEmails.length && (
+              <p className="text-center" style={{ margin: "30px 20px 10px" }}>
+                <b>This board is not shared.</b>
+                <br />
+                Add email addresses that you want to share with.
+              </p>
+            )}
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
@@ -126,6 +144,7 @@ class BoardCreate extends React.PureComponent<
             labelPosition="right"
             icon="checkmark"
             content="Save"
+            loading={isSaving}
           />
         </Modal.Actions>
       </Modal>

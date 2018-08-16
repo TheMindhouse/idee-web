@@ -54,6 +54,7 @@ const Element = (props: ElementProps) => {
       alt="icon"
       className={props.className}
       aria-hidden="true"
+      {...props}
     />
   )
 }

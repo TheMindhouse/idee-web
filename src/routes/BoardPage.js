@@ -4,10 +4,13 @@ import { Sidebar } from "../components/Sidebar/Sidebar"
 import { type Match, type RouterHistory, withRouter } from "react-router-dom"
 import { IdeasList } from "../components/IdeasList/IdeasList"
 import { BoardCreate } from "../components/BoardCreate/BoardCreate"
+import { withBoards } from "../hoc/withBoards"
+import type { BoardsStoreType } from "../stores/BoardsProvider"
 
 type BoardPageProps = {
   match: Match,
   history: RouterHistory,
+  boardsStore: BoardsStoreType,
 }
 
 type BoardPageState = {
@@ -27,6 +30,9 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
     currentView: BOARD_PAGE_VIEWS.DEFAULT,
   }
 
+  goToDefaultView = () =>
+    this.setState({ currentView: BOARD_PAGE_VIEWS.DEFAULT })
+
   render() {
     const { currentView } = this.state
     return (
@@ -36,12 +42,16 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
             this.setState({ currentView: BOARD_PAGE_VIEWS.BOARD_ADD })
           }
         />
+
         <IdeasList />
+
         {currentView === BOARD_PAGE_VIEWS.BOARD_ADD && (
           <BoardCreate
-            onClose={() =>
-              this.setState({ currentView: BOARD_PAGE_VIEWS.DEFAULT })
-            }
+            onClose={this.goToDefaultView}
+            onSave={(boardId) => {
+              this.props.boardsStore.setActiveBoard(boardId)
+              this.goToDefaultView()
+            }}
           />
         )}
       </div>
@@ -49,5 +59,5 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
   }
 }
 
-BoardPage = withRouter(BoardPage)
+BoardPage = withRouter(withBoards(BoardPage))
 export { BoardPage }

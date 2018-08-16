@@ -21,10 +21,6 @@
     overflow: auto;
 }
 
-.SidebarContent__CreateBoard {
-    margin: 20px 0;
-}
-
 .SidebarContent__CreateBoardButton {
     font-family: 'Catamaran', sans-serif;
     font-weight: 800;
@@ -33,7 +29,7 @@
     align-items: center;
     width: 100%;
     background: none;
-    padding: 10px 20px;
+    padding: 20px;
     border: 0;
     outline: none;
     color: #27127c;

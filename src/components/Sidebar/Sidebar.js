@@ -24,15 +24,13 @@ class Sidebar extends React.PureComponent<SidebarProps> {
           <div className="SidebarContent__BoardsList">
             <BoardsList userId={authUser.id} />
           </div>
-          <div className="SidebarContent__CreateBoard">
-            <button
-              onClick={onCreateBoardClick}
-              className="SidebarContent__CreateBoardButton"
-            >
-              <Element icon={ELEMENTS.plus} />
-              <span>create new board</span>
-            </button>
-          </div>
+          <button
+            onClick={onCreateBoardClick}
+            className="SidebarContent__CreateBoardButton"
+          >
+            <Element icon={ELEMENTS.plus} />
+            <span>create new board</span>
+          </button>
         </div>
       </div>
     )
