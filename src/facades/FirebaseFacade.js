@@ -14,4 +14,8 @@ console.log("Setting up Firebase", firebase)
 // Initialize Cloud Firestore through Firebase
 const db = firebase.firestore()
 
+db.settings({
+  timestampsInSnapshots: true,
+})
+
 export { firebase, db }
