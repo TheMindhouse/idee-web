@@ -17,6 +17,15 @@
     opacity: 0.6;
     display: flex;
     align-items: center;
+    transition: all ease-in-out 0.2s;
+}
+
+.IdeasListHeader__SortDirection--desc {
+    transform: rotateX(0deg)
+}
+
+.IdeasListHeader__SortDirection--asc {
+    transform: rotateX(180deg)
 }
 
 .IdeasListHeader__SortDirection:hover {

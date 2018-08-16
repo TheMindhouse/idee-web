@@ -41,15 +41,13 @@ class IdeasListHeader extends React.PureComponent<IdeasListHeaderProps> {
           />
           <div
             onClick={changeSortDirection}
-            className="IdeasListHeader__SortDirection"
+            className={`IdeasListHeader__SortDirection ${
+              sortDesc
+                ? "IdeasListHeader__SortDirection--desc"
+                : "IdeasListHeader__SortDirection--asc"
+            }`}
           >
-            <Element
-              icon={ELEMENTS.sort}
-              size={ELEMENTS_SIZE.small}
-              style={{
-                transform: `rotate(${sortDesc ? 0 : "180deg"})`,
-              }}
-            />
+            <Element icon={ELEMENTS.sort} size={ELEMENTS_SIZE.small} />
           </div>
         </div>
       </div>
