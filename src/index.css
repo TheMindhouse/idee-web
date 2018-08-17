@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 0 0 0 270px;
+  padding: 0;
   font-family: 'Catamaran', sans-serif;
   font-weight: 400;
   color: #27127c;
@@ -9,6 +9,10 @@ body {
 
 h1, h2, h3, h4, h5 {
   font-family: 'Catamaran', sans-serif;
+}
+
+.page-container {
+  padding-left: 270px;
 }
 
 .FullColorPage {

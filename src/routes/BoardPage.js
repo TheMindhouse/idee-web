@@ -36,7 +36,7 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
   render() {
     const { currentView } = this.state
     return (
-      <div style={{ display: "flex" }}>
+      <div className="page-container">
         <Sidebar
           onCreateBoardClick={() =>
             this.setState({ currentView: BOARD_PAGE_VIEWS.BOARD_ADD })
