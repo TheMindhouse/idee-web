@@ -1,0 +1,33 @@
+.IdeasListControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 2px solid;
+}
+
+.IdeasListControls__Sort {
+    display: flex;
+    align-items: stretch;
+}
+
+.IdeasListControls__SortDirection {
+    padding: 0 15px;
+    cursor: pointer;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    transition: all ease-in-out 0.2s;
+}
+
+.IdeasListControls__SortDirection--desc {
+    transform: rotateX(0deg)
+}
+
+.IdeasListControls__SortDirection--asc {
+    transform: rotateX(180deg)
+}
+
+.IdeasListControls__SortDirection:hover {
+    opacity: 1;
+}

@@ -3,7 +3,7 @@ import * as React from "react"
 import { Sidebar } from "../components/Sidebar/Sidebar"
 import { type Match, type RouterHistory, withRouter } from "react-router-dom"
 import { IdeasList } from "../components/IdeasList/IdeasList"
-import { BoardCreate } from "../components/BoardCreate/BoardCreate"
+import { BoardOptions } from "../components/BoardCreate/BoardOptions"
 import { withBoards } from "../hoc/withBoards"
 import type { BoardsStoreType } from "../stores/BoardsProvider"
 
@@ -46,7 +46,7 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
         <IdeasList />
 
         {currentView === BOARD_PAGE_VIEWS.BOARD_ADD && (
-          <BoardCreate
+          <BoardOptions
             onClose={this.goToDefaultView}
             onSave={(boardId) => {
               this.props.boardsStore.setActiveBoard(boardId)

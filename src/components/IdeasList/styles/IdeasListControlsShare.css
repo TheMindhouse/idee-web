@@ -1,9 +1,9 @@
-.IdeasListHeaderShare {
+.IdeasListControlsShare {
     display: flex;
     align-items: center;
     color: #999;
 }
 
-.IdeasListHeaderShare__Text {
+.IdeasListControlsShare__Text {
     margin-right: 10px;
 }

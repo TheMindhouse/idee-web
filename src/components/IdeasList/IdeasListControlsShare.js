@@ -5,15 +5,15 @@ import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { withAuth } from "../../hoc/withAuth"
 import { User } from "../../models/User"
 import { Element, ELEMENTS } from "../Element/Element"
-import "./styles/IdeasListHeaderShare.css"
+import "./styles/IdeasListControlsShare.css"
 
-type IdeasListHeaderShareProps = {
+type IdeasListControlsShareProps = {
   boardsStore: BoardsStoreType,
   authUser: User,
 }
 
-const IdeasListHeaderShare = withAuth(
-  withBoards((props: IdeasListHeaderShareProps) => {
+const IdeasListControlsShare = withAuth(
+  withBoards((props: IdeasListControlsShareProps) => {
     const board = props.boardsStore.currentBoard
     if (!board) {
       return null
@@ -21,23 +21,23 @@ const IdeasListHeaderShare = withAuth(
     const isShared = board.isShared()
     if (!isShared) {
       return (
-        <div className="IdeasListHeaderShare">
-          <span className="IdeasListHeaderShare__Text">not shared</span>
+        <div className="IdeasListControlsShare">
+          <span className="IdeasListControlsShare__Text">not shared</span>
         </div>
       )
     }
     if (isShared && board.isOwner(props.authUser.id)) {
       return (
-        <div className="IdeasListHeaderShare">
-          <span className="IdeasListHeaderShare__Text">shared</span>
+        <div className="IdeasListControlsShare">
+          <span className="IdeasListControlsShare__Text">shared</span>
           <Element icon={ELEMENTS.share} />
         </div>
       )
     }
     if (isShared && !board.isOwner(props.authUser.id)) {
       return (
-        <div className="IdeasListHeaderShare">
-          <span className="IdeasListHeaderShare__Text">shared to you</span>
+        <div className="IdeasListControlsShare">
+          <span className="IdeasListControlsShare__Text">shared to you</span>
           <Element icon={ELEMENTS.share} />
         </div>
       )
@@ -45,4 +45,4 @@ const IdeasListHeaderShare = withAuth(
   })
 )
 
-export { IdeasListHeaderShare }
+export { IdeasListControlsShare }

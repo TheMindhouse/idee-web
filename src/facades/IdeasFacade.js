@@ -1,21 +1,22 @@
 // @flow
-
-import { AuthFacade } from "./AuthFacade"
-import { db } from "./FirebaseFacade"
+import { db, firebase } from "./FirebaseFacade"
 import { COLLECTIONS } from "../constants/firebase"
 import { Idea } from "../models/Idea"
 
 export class IdeasFacade {
   static createIdea(idea: Idea): Promise<mixed> {
-    console.log(AuthFacade.getCurrentUser())
-
+    const ideaToAdd = {
+      ...idea.toExport(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      modifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }
     return (
       db
         .collection(COLLECTIONS.BOARDS)
         .doc(idea.boardId)
         .collection(COLLECTIONS.IDEAS)
         // $FlowFixMe
-        .add(idea.toExport())
+        .add(ideaToAdd)
     )
   }
 }

@@ -11,31 +11,35 @@ import { isValidEmail } from "../../helpers/strings"
 import { SharedUser } from "../SharedUser/SharedUser"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 
-type BoardCreateProps = {
-  authUser: User,
-  boardsStore: BoardsStoreType,
+type BoardOptionsProps = {
+  board?: Board,
   onClose: () => void,
   onSave: (string) => void,
+  authUser: User,
+  boardsStore: BoardsStoreType,
 }
 
-type BoardCreateState = {
+type BoardOptionsState = {
   name: string,
   shareToEmails: Array<string>,
   emailInvalidError: boolean,
   isSaving: boolean,
 }
 
-class BoardCreate extends React.PureComponent<
-  BoardCreateProps,
-  BoardCreateState
+class BoardOptions extends React.PureComponent<
+  BoardOptionsProps,
+  BoardOptionsState
 > {
   static defaultProps = {}
 
-  state = {
-    name: "",
-    shareToEmails: [],
-    emailInvalidError: false,
-    isSaving: false,
+  constructor(props: BoardOptionsProps) {
+    super(props)
+    this.state = {
+      name: props.board ? props.board.name : "",
+      shareToEmails: props.board ? Object.keys(props.board.roles) : [],
+      emailInvalidError: false,
+      isSaving: false,
+    }
   }
 
   onChangeName = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -43,7 +47,6 @@ class BoardCreate extends React.PureComponent<
   }
 
   addShareToEmail = (email: string) => {
-    //todo - verify if email has a correct format
     return this.setState({
       shareToEmails: [email, ...this.state.shareToEmails],
     })
@@ -74,7 +77,7 @@ class BoardCreate extends React.PureComponent<
   onSave = () => {
     this.setState({ isSaving: true })
     const shareToEmails: Array<string> = [...this.state.shareToEmails]
-    // Convert list of e-mails to "role" object.
+    // Convert an array of e-mails to the "roles" object.
     // Currently we only support "idea_editor" role.
     const roles = shareToEmails.reduce(
       (acc: { [string]: string }, email: string) => {
@@ -100,15 +103,22 @@ class BoardCreate extends React.PureComponent<
   }
 
   render() {
-    const { onClose } = this.props
-    const { shareToEmails, isSaving } = this.state
+    const { board, onClose } = this.props
+    const { name, shareToEmails, isSaving } = this.state
     return (
       <Modal centered={false} onClose={onClose} open={true} size="tiny">
-        <Modal.Header>Create new board</Modal.Header>
+        <Modal.Header>
+          {board ? "Board options" : "Create new board"}
+        </Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <FormField label="Board name">
-              <input type="text" onChange={this.onChangeName} autoFocus />
+              <input
+                type="text"
+                onChange={this.onChangeName}
+                autoFocus
+                value={name}
+              />
             </FormField>
 
             <FormField
@@ -152,5 +162,5 @@ class BoardCreate extends React.PureComponent<
   }
 }
 
-BoardCreate = withAuth(BoardCreate)
-export { BoardCreate }
+BoardOptions = withAuth(BoardOptions)
+export { BoardOptions }

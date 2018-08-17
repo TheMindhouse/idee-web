@@ -7,6 +7,7 @@ import * as Rx from "rxjs/Rx"
 import { BOARD_ROLES, COLLECTIONS } from "../constants/firebase"
 import { type RouterHistory } from "react-router-dom"
 import { AuthFacade } from "../facades/AuthFacade"
+import { BoardsFacade } from "../facades/BoardsFacade"
 
 const BoardsContext = React.createContext()
 
@@ -112,10 +113,26 @@ class BoardsProvider extends React.PureComponent<
     this.setState({ currentBoard })
   }
 
+  deleteActiveBoard = () => {
+    const { boards, currentBoard } = this.state
+    if (!currentBoard) {
+      return
+    }
+    BoardsFacade.deleteBoard(currentBoard.id).then(() => {
+      if (boards && boards.length > 1) {
+        const firstBoard = boards.filter(
+          (board: Board) => board.id !== currentBoard.id
+        )[0]
+        this.setActiveBoard(firstBoard.id)
+      }
+    })
+  }
+
   render() {
     const boardStore: BoardsStoreType = {
       ...this.state,
       setActiveBoard: this.setActiveBoard,
+      deleteActiveBoard: this.deleteActiveBoard,
     }
     return (
       <BoardsContext.Provider value={boardStore}>
@@ -129,6 +146,7 @@ export type BoardsStoreType = {
   boards: ?Array<Board>,
   currentBoard: ?Board,
   setActiveBoard: (string) => void,
+  deleteActiveBoard: () => void,
 }
 
 export { BoardsProvider, BoardsContext }

@@ -6,8 +6,10 @@ import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
 import { IdeasListItem } from "./IdeasListItem"
-import { IdeasListHeader } from "./IdeasListHeader"
+import { IdeasListControls } from "./IdeasListControls"
 import "./styles/IdeasList.css"
+import { BoardControls } from "../BoardControls/BoardControls"
+import { IdeasListHeader } from "./IdeasListHeader"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -70,8 +72,8 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
     const { sortDesc, sortBy } = this.state
     return (
       <div className="IdeasList">
-        <h1 className="IdeasList__BoardName">{board.name}</h1>
-        <IdeasListHeader
+        <IdeasListHeader />
+        <IdeasListControls
           sortBy={sortBy}
           sortDesc={sortDesc}
           changeSortMethod={this.changeSortMethod}

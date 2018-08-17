@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react"
-import { BoardCreate } from "../components/BoardCreate/BoardCreate"
+import { BoardOptions } from "../components/BoardCreate/BoardOptions"
 
 type BoardNewPageProps = {}
 
@@ -10,7 +10,7 @@ class BoardNewPage extends React.PureComponent<BoardNewPageProps> {
   render() {
     return (
       <div>
-        <BoardCreate />
+        <BoardOptions />
       </div>
     )
   }
