@@ -71,7 +71,13 @@ class BoardsProvider extends React.PureComponent<
       (boardsContainers: Array<Array<Board>>) => {
         console.log("Boards updated")
         const boards: Array<Board> = [].concat.apply([], [...boardsContainers])
-        const currentBoard = this.state.currentBoard || boards[0]
+        const currentBoard = this.state.currentBoard
+          ? boards.find(
+              (board: Board) =>
+                this.state.currentBoard &&
+                this.state.currentBoard.id === board.id
+            )
+          : boards[0]
         this.setState({ boards, currentBoard })
       }
     )
@@ -98,10 +104,10 @@ class BoardsProvider extends React.PureComponent<
       rxSubject$.next(boards)
     })
 
-  setActiveBoard = (boardId: string): void => {
+  setActiveBoard = (boardId: ?string): void => {
     const boards = this.state.boards
-    if (!boards) {
-      throw new Error("No board found with given boardId")
+    if (!boards || !boardId) {
+      return this.setState({ currentBoard: null })
     }
     const foundBoards: Array<Board> = boards.filter(
       (board: Board) => board.id === boardId
@@ -120,10 +126,14 @@ class BoardsProvider extends React.PureComponent<
     }
     BoardsFacade.deleteBoard(currentBoard.id).then(() => {
       if (boards && boards.length > 1) {
-        const firstBoard = boards.filter(
+        const firstBoard = boards.find(
           (board: Board) => board.id !== currentBoard.id
-        )[0]
-        this.setActiveBoard(firstBoard.id)
+        )
+        if (firstBoard) {
+          this.setActiveBoard(firstBoard.id)
+        }
+      } else {
+        this.setActiveBoard(null)
       }
     })
   }

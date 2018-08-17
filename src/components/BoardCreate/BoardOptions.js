@@ -87,10 +87,16 @@ class BoardOptions extends React.PureComponent<
       {}
     )
     const board = new Board({
+      ...this.props.board,
       name: this.state.name,
       ownerId: this.props.authUser.id,
       roles,
     })
+
+    this.props.board ? this.onBoardUpdate(board) : this.onBoardCreate(board)
+  }
+
+  onBoardCreate = (board: Board) =>
     BoardsFacade.createBoard(board)
       .then((docRef: $npm$firebase$firestore$DocumentReference) => {
         console.log("Added new board")
@@ -100,7 +106,17 @@ class BoardOptions extends React.PureComponent<
         console.error("Error adding board: ", error)
         this.setState({ isSaving: false })
       })
-  }
+
+  onBoardUpdate = (board: Board): Promise<void> =>
+    BoardsFacade.updateBoard(board)
+      .then(() => {
+        console.log(`Updated board ${board.name}`)
+        this.props.onSave(board.id)
+      })
+      .catch((error) => {
+        console.error("Error updating board: ", error)
+        this.setState({ isSaving: false })
+      })
 
   render() {
     const { board, onClose } = this.props
