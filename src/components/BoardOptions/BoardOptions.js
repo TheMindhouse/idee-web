@@ -161,9 +161,7 @@ class BoardOptions extends React.PureComponent<
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={onClose} secondary>
-            Cancel
-          </Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button
             onClick={this.onSave}
             positive

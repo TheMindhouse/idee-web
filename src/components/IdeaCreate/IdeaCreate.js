@@ -51,63 +51,65 @@ class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
     return (
       <Dimmer active={true} onClickOutside={this.props.onClose}>
         <div className="IdeaCreate">
-          <h2>Add new idea</h2>
-          <FormField label="Name of the idea">
+          <div>
+            <h2 className="IdeaCreate__Header">Add new idea</h2>
+            <FormField label="Name of the idea">
+              <input
+                type="text"
+                onChange={this.onChangeField.bind(null, "name", false)}
+                autoFocus
+                value={name}
+              />
+            </FormField>
+            <FormField label="Description">
+              <textarea
+                value={description}
+                onChange={this.onChangeField.bind(null, "description", false)}
+              />
+            </FormField>
+            <p>Ease:</p>
             <input
-              type="text"
-              onChange={this.onChangeField.bind(null, "name", false)}
-              autoFocus
-              value={name}
+              type="range"
+              min={0}
+              max={10}
+              value={ease}
+              onChange={this.onChangeField.bind(null, "ease", true)}
+            />{" "}
+            {ease}
+            {SCORE_TEXTS.EASE[ease]}
+            <p>Confidence:</p>
+            <input
+              type="range"
+              min={0}
+              max={10}
+              value={confidence}
+              onChange={this.onChangeField.bind(null, "confidence", true)}
+            />{" "}
+            {confidence}
+            {SCORE_TEXTS.CONFIDENCE[confidence]}
+            <p>Impact:</p>
+            <input
+              type="range"
+              min={0}
+              max={10}
+              value={impact}
+              onChange={this.onChangeField.bind(null, "impact", true)}
+            />{" "}
+            {impact}
+            {SCORE_TEXTS.IMPACT[impact]}
+            <p className="IdeaCreate__Score">{this.state.idea.getAverage()}</p>
+          </div>
+          <div>
+            <Button onClick={this.props.onClose}>Cancel</Button>
+            <Button
+              onClick={this.onSave}
+              positive
+              labelPosition="right"
+              icon="checkmark"
+              content="Save"
+              loading={this.state.isSaving}
             />
-          </FormField>
-          <FormField label="Description">
-            <textarea
-              value={description}
-              onChange={this.onChangeField.bind(null, "description", false)}
-            />
-          </FormField>
-          <p>Ease:</p>
-          <input
-            type="range"
-            min={0}
-            max={10}
-            value={ease}
-            onChange={this.onChangeField.bind(null, "ease", true)}
-          />{" "}
-          {ease}
-          {SCORE_TEXTS.EASE[ease]}
-          <p>Confidence:</p>
-          <input
-            type="range"
-            min={0}
-            max={10}
-            value={confidence}
-            onChange={this.onChangeField.bind(null, "confidence", true)}
-          />{" "}
-          {confidence}
-          {SCORE_TEXTS.CONFIDENCE[confidence]}
-          <p>Impact:</p>
-          <input
-            type="range"
-            min={0}
-            max={10}
-            value={impact}
-            onChange={this.onChangeField.bind(null, "impact", true)}
-          />{" "}
-          {impact}
-          {SCORE_TEXTS.IMPACT[impact]}
-          <p className="IdeaCreate__Score">{this.state.idea.getAverage()}</p>
-          <Button onClick={this.props.onClose} secondary>
-            Cancel
-          </Button>
-          <Button
-            onClick={this.onSave}
-            positive
-            labelPosition="right"
-            icon="checkmark"
-            content="Save"
-            loading={this.state.isSaving}
-          />
+          </div>
         </div>
       </Dimmer>
     )

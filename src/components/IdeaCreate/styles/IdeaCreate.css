@@ -9,6 +9,13 @@
     max-width: 100vw;
     text-align: left;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.IdeaCreate__Header {
+    font-size: 45px;
 }
 
 .IdeaCreate__Score {
