@@ -3,27 +3,31 @@ import * as React from "react"
 import { Idea } from "../../models/Idea"
 import { IdeasFacade } from "../../facades/IdeasFacade"
 import { Button, Dimmer } from "semantic-ui-react"
-import "./styles/IdeaCreate.css"
+import "./styles/IdeaForm.css"
 import { FormField } from "../Forms/FormField"
 import { SCORE_TEXTS } from "../../constants/scores"
 
-type IdeaCreateProps = {
+type IdeaFormProps = {
   boardId: string,
   onClose: Function,
+  idea?: Idea,
+  onUpdate?: (Idea) => void,
 }
 
-type IdeaCreateState = {
+type IdeaFormState = {
   idea: Idea,
   isSaving: boolean,
 }
 
-class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
+class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
   static defaultProps = {}
 
   state = {
-    idea: new Idea({ boardId: this.props.boardId }),
+    idea: this.props.idea || new Idea({ boardId: this.props.boardId }),
     isSaving: false,
   }
+
+  isEditMode = () => this.props.idea instanceof Idea
 
   onChangeField = (
     fieldName: string,
@@ -41,8 +45,15 @@ class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
   }
 
   onSave = () => {
+    const { idea } = this.state
     this.setState({ isSaving: true })
-    IdeasFacade.createIdea(this.state.idea).then(this.props.onClose)
+    this.isEditMode()
+      ? IdeasFacade.updateIdea(idea).then(
+          () =>
+            typeof this.props.onUpdate === "function" &&
+            this.props.onUpdate(idea)
+        )
+      : IdeasFacade.createIdea(idea).then(this.props.onClose)
   }
 
   render() {
@@ -50,9 +61,11 @@ class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
 
     return (
       <Dimmer active={true} onClickOutside={this.props.onClose}>
-        <div className="IdeaCreate">
+        <div className="IdeaForm">
           <div>
-            <h2 className="IdeaCreate__Header">Add new idea</h2>
+            <h2 className="IdeaForm__Header">
+              {this.isEditMode() ? "Edit idea" : "Add new idea"}
+            </h2>
             <FormField label="Name of the idea">
               <input
                 type="text"
@@ -97,7 +110,7 @@ class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
             />{" "}
             {impact}
             {SCORE_TEXTS.IMPACT[impact]}
-            <p className="IdeaCreate__Score">{this.state.idea.getAverage()}</p>
+            <p className="IdeaForm__Score">{this.state.idea.getAverage()}</p>
           </div>
           <div>
             <Button onClick={this.props.onClose}>Cancel</Button>
@@ -116,4 +129,4 @@ class IdeaCreate extends React.PureComponent<IdeaCreateProps, IdeaCreateState> {
   }
 }
 
-export { IdeaCreate }
+export { IdeaForm }

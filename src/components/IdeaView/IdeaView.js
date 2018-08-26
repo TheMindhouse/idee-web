@@ -8,6 +8,7 @@ import { IdeaControls } from "../IdeaControls/IdeaControls"
 
 type IdeaViewProps = {
   idea: Idea,
+  onEdit: Function,
   onClose: Function,
 }
 
@@ -15,7 +16,7 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
   static defaultProps = {}
 
   render() {
-    const { idea, onClose } = this.props
+    const { idea, onEdit, onClose } = this.props
 
     return (
       <Dimmer active={true} onClickOutside={onClose}>
@@ -23,7 +24,7 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
           <div>
             <div className="IdeaView__Header">
               <p className="IdeaView__Name">{idea.name}</p>
-              <IdeaControls onEdit={() => null} onDelete={() => null} />
+              <IdeaControls onEdit={onEdit} onDelete={() => null} />
             </div>
             <p className="IdeaView__Description">{idea.description}</p>
             <Divider />

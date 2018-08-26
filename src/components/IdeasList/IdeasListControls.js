@@ -2,9 +2,9 @@
 import * as React from "react"
 import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 import { Dropdown } from "semantic-ui-react"
-import { SORT_METHODS } from "./IdeasList"
 import { IdeasListControlsShare } from "./IdeasListControlsShare"
 import "./styles/IdeasListControls.css"
+import { SORT_METHODS } from "./IdeasListDefaultView"
 
 type IdeasListControlsProps = {
   sortBy: string,
