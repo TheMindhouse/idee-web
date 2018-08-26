@@ -6,15 +6,16 @@ import { Score } from "../Score/Score"
 
 type IdeasListItemProps = {
   idea: Idea,
+  onClick: Function,
 }
 
 class IdeasListItem extends React.PureComponent<IdeasListItemProps> {
   static defaultProps = {}
 
   render() {
-    const { idea } = this.props
+    const { idea, onClick } = this.props
     return (
-      <div className="IdeasListItem">
+      <div className="IdeasListItem" onClick={onClick}>
         <h3 className="IdeasListItem__Name">{idea.name}</h3>
         <div className="IdeasListItem__Scores">
           <Score value={idea.ease} className="IdeasListItem__Score" />

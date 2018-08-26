@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react"
-import { BoardOptions } from "../components/BoardCreate/BoardOptions"
+import { BoardOptions } from "../components/BoardOptions/BoardOptions"
 
 type BoardNewPageProps = {}
 

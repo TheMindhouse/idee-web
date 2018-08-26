@@ -8,8 +8,9 @@ import { IdeaCreate } from "../IdeaCreate/IdeaCreate"
 import { IdeasListItem } from "./IdeasListItem"
 import { IdeasListControls } from "./IdeasListControls"
 import "./styles/IdeasList.css"
-import { BoardControls } from "../BoardControls/BoardControls"
 import { IdeasListHeader } from "./IdeasListHeader"
+import { IdeaCreateButton } from "../IdeaCreateButton/IdeaCreateButton"
+import { IdeaView } from "../IdeaView/IdeaView"
 
 type IdeasListProps = {
   boardsStore: BoardsStoreType,
@@ -18,6 +19,8 @@ type IdeasListProps = {
 type IdeasListState = {
   sortBy: string,
   sortDesc: boolean,
+  currentView: string,
+  currentIdea: ?Idea,
 }
 
 export const SORT_METHODS = {
@@ -27,13 +30,25 @@ export const SORT_METHODS = {
   IMPACT: "impact",
 }
 
+const IDEAS_LIST_VIEWS = {
+  DEFAULT: "default",
+  IDEA_VIEW: "ideaView",
+  IDEA_ADD: "ideaAdd",
+  IDEA_EDIT: "ideaEdit",
+}
+
 class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   static defaultProps = {}
 
   state = {
     sortBy: SORT_METHODS.AVERAGE,
     sortDesc: true,
+    currentView: IDEAS_LIST_VIEWS.DEFAULT,
+    currentIdea: null,
   }
+
+  goToDefaultView = () =>
+    this.setState({ currentView: IDEAS_LIST_VIEWS.DEFAULT })
 
   getSortValue = (idea: Idea): number => {
     switch (this.state.sortBy) {
@@ -64,12 +79,20 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   changeSortMethod = (event: SyntheticEvent<HTMLInputElement>, data) =>
     this.setState({ sortBy: data.value })
 
+  setCurrentIdea = (currentIdea: Idea) => this.setState({ currentIdea })
+
+  showIdea = (idea: Idea) =>
+    this.setState({
+      currentIdea: idea,
+      currentView: IDEAS_LIST_VIEWS.IDEA_VIEW,
+    })
+
   render() {
     const board = this.props.boardsStore.currentBoard
     if (!board) {
       return null
     }
-    const { sortDesc, sortBy } = this.state
+    const { sortDesc, sortBy, currentView, currentIdea } = this.state
     return (
       <div className="IdeasList">
         <IdeasListHeader />
@@ -87,7 +110,11 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
                 ideas
                   .sort(this.sortFunction)
                   .map((idea: Idea) => (
-                    <IdeasListItem idea={idea} key={idea.id} />
+                    <IdeasListItem
+                      idea={idea}
+                      key={idea.id}
+                      onClick={() => this.showIdea(idea)}
+                    />
                   ))
               ) : (
                 <p>No ideas</p>
@@ -97,7 +124,21 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
             )
           }
         />
-        <IdeaCreate boardId={board.id} />
+
+        <IdeaCreateButton
+          onClick={() =>
+            this.setState({ currentView: IDEAS_LIST_VIEWS.IDEA_ADD })
+          }
+        />
+
+        {currentView === IDEAS_LIST_VIEWS.IDEA_ADD && (
+          <IdeaCreate boardId={board.id} onClose={this.goToDefaultView} />
+        )}
+
+        {currentView === IDEAS_LIST_VIEWS.IDEA_VIEW &&
+          currentIdea && (
+            <IdeaView idea={currentIdea} onClose={this.goToDefaultView} />
+          )}
       </div>
     )
   }

@@ -4,6 +4,11 @@
     width: 100%;
     border-bottom: 2px solid;
     padding: 10px 0;
+    cursor: pointer;
+}
+
+.IdeasListItem:hover {
+    background: #fafafa;
 }
 
 .IdeasListItem__Name {

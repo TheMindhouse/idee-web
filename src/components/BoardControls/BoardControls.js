@@ -2,7 +2,7 @@
 import * as React from "react"
 import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 import { Confirm, Dropdown } from "semantic-ui-react"
-import { BoardOptions } from "../BoardCreate/BoardOptions"
+import { BoardOptions } from "../BoardOptions/BoardOptions"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { withBoards } from "../../hoc/withBoards"
 

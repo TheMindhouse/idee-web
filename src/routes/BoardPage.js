@@ -3,7 +3,7 @@ import * as React from "react"
 import { Sidebar } from "../components/Sidebar/Sidebar"
 import { type Match, type RouterHistory, withRouter } from "react-router-dom"
 import { IdeasList } from "../components/IdeasList/IdeasList"
-import { BoardOptions } from "../components/BoardCreate/BoardOptions"
+import { BoardOptions } from "../components/BoardOptions/BoardOptions"
 import { withBoards } from "../hoc/withBoards"
 import type { BoardsStoreType } from "../stores/BoardsProvider"
 

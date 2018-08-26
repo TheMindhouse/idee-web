@@ -1,0 +1,52 @@
+.IdeaView {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    color: #27127c;
+    width: 600px;
+    max-width: 100vw;
+    text-align: left;
+    padding: 30px;
+    font-size: 16px;
+}
+
+.IdeaView__Name {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: -webkit-linear-gradient(45deg, #00e7e4, #5feb72, #bfef00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.IdeaView__Description {
+    font-size: 24px;
+    color: #999;
+}
+
+.IdeaView__Scores {
+    margin: 20px 0;
+}
+
+.IdeaViewScore__Type {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.IdeaViewScore__Value {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0 15px;
+}
+
+.IdeaViewScore__Text {
+    font-size: 14px;
+}
+
+.IdeaView__TotalScore {
+    font-size: 69px;
+    font-weight: bold;
+    margin-top: -10px;
+}
