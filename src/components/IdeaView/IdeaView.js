@@ -4,6 +4,7 @@ import { Idea } from "../../models/Idea"
 import { Button, Dimmer, Divider } from "semantic-ui-react"
 import "./styles/IdeaView.css"
 import { SCORE_TEXTS } from "../../constants/scores"
+import { IdeaControls } from "../IdeaControls/IdeaControls"
 
 type IdeaViewProps = {
   idea: Idea,
@@ -20,7 +21,10 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
       <Dimmer active={true} onClickOutside={onClose}>
         <div className="IdeaView">
           <div>
-            <p className="IdeaView__Name">{idea.name}</p>
+            <div className="IdeaView__Header">
+              <p className="IdeaView__Name">{idea.name}</p>
+              <IdeaControls onEdit={() => null} onDelete={() => null} />
+            </div>
             <p className="IdeaView__Description">{idea.description}</p>
             <Divider />
             <div className="IdeaView__Scores">
