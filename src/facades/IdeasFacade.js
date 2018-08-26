@@ -35,4 +35,16 @@ export class IdeasFacade {
         .update(ideaToUpdate)
     )
   }
+
+  static deleteIdea(idea: Idea) {
+    return (
+      db
+        .collection(COLLECTIONS.BOARDS)
+        .doc(idea.boardId)
+        .collection(COLLECTIONS.IDEAS)
+        // $FlowFixMe
+        .doc(idea.id)
+        .delete()
+    )
+  }
 }

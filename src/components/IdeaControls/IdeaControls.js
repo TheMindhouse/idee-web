@@ -2,6 +2,8 @@
 import * as React from "react"
 import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 import { Confirm, Dropdown } from "semantic-ui-react"
+import { IdeasFacade } from "../../facades/IdeasFacade"
+import { Idea } from "../../models/Idea"
 
 const VIEWS = {
   DEFAULT: "default",
@@ -9,6 +11,7 @@ const VIEWS = {
 }
 
 type IdeaControlsProps = {
+  idea: Idea,
   onEdit: Function,
   onDelete: Function,
 }
@@ -31,6 +34,10 @@ class IdeaControls extends React.PureComponent<
 
   showDeleteView = () => this.setState({ currentView: VIEWS.IDEA_REMOVE })
 
+  onDeleteIdea = () => {
+    IdeasFacade.deleteIdea(this.props.idea).then(this.props.onDelete)
+  }
+
   render() {
     const { currentView } = this.state
     return (
@@ -52,7 +59,7 @@ class IdeaControls extends React.PureComponent<
           content="This operation is irreversible. This idea will be permanently deleted."
           confirmButton="Delete idea"
           onCancel={this.showDefaultView}
-          onConfirm={this.props.onDelete}
+          onConfirm={this.onDeleteIdea}
         />
       </div>
     )
