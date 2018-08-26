@@ -30,7 +30,7 @@ export const SORT_METHODS = {
   IMPACT: "impact",
 }
 
-const IDEAS_LIST_VIEWS = {
+const VIEWS = {
   DEFAULT: "default",
   IDEA_VIEW: "ideaView",
   IDEA_ADD: "ideaAdd",
@@ -43,12 +43,15 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   state = {
     sortBy: SORT_METHODS.AVERAGE,
     sortDesc: true,
-    currentView: IDEAS_LIST_VIEWS.DEFAULT,
+    currentView: VIEWS.DEFAULT,
     currentIdea: null,
   }
 
-  goToDefaultView = () =>
-    this.setState({ currentView: IDEAS_LIST_VIEWS.DEFAULT })
+  showDefaultView = () => this.setState({ currentView: VIEWS.DEFAULT })
+  showIdeaView = (idea: Idea) =>
+    this.setState({ currentIdea: idea, currentView: VIEWS.IDEA_VIEW })
+  showAddView = () => this.setState({ currentView: VIEWS.IDEA_ADD })
+  showEditView = () => this.setState({ currentView: VIEWS.IDEA_EDIT })
 
   getSortValue = (idea: Idea): number => {
     switch (this.state.sortBy) {
@@ -79,14 +82,6 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   changeSortMethod = (event: SyntheticEvent<HTMLInputElement>, data) =>
     this.setState({ sortBy: data.value })
 
-  setCurrentIdea = (currentIdea: Idea) => this.setState({ currentIdea })
-
-  showIdea = (idea: Idea) =>
-    this.setState({
-      currentIdea: idea,
-      currentView: IDEAS_LIST_VIEWS.IDEA_VIEW,
-    })
-
   render() {
     const board = this.props.boardsStore.currentBoard
     if (!board) {
@@ -113,7 +108,7 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
                     <IdeasListItem
                       idea={idea}
                       key={idea.id}
-                      onClick={() => this.showIdea(idea)}
+                      onClick={() => this.showIdeaView(idea)}
                     />
                   ))
               ) : (
@@ -125,19 +120,15 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
           }
         />
 
-        <IdeaCreateButton
-          onClick={() =>
-            this.setState({ currentView: IDEAS_LIST_VIEWS.IDEA_ADD })
-          }
-        />
+        <IdeaCreateButton onClick={this.showAddView} />
 
-        {currentView === IDEAS_LIST_VIEWS.IDEA_ADD && (
-          <IdeaCreate boardId={board.id} onClose={this.goToDefaultView} />
+        {currentView === VIEWS.IDEA_ADD && (
+          <IdeaCreate boardId={board.id} onClose={this.showDefaultView} />
         )}
 
-        {currentView === IDEAS_LIST_VIEWS.IDEA_VIEW &&
+        {currentView === VIEWS.IDEA_VIEW &&
           currentIdea && (
-            <IdeaView idea={currentIdea} onClose={this.goToDefaultView} />
+            <IdeaView idea={currentIdea} onClose={this.showDefaultView} />
           )}
       </div>
     )

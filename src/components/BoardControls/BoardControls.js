@@ -6,7 +6,7 @@ import { BoardOptions } from "../BoardOptions/BoardOptions"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { withBoards } from "../../hoc/withBoards"
 
-const BOARD_CONTROLS_VIEWS = {
+const VIEWS = {
   DEFAULT: "default",
   BOARD_EDIT: "boardEdit",
   BOARD_REMOVE: "boardRemove",
@@ -27,15 +27,18 @@ class BoardControls extends React.PureComponent<
   static defaultProps = {}
 
   state = {
-    currentView: BOARD_CONTROLS_VIEWS.DEFAULT,
+    currentView: VIEWS.DEFAULT,
   }
 
-  goToDefaultView = () =>
-    this.setState({ currentView: BOARD_CONTROLS_VIEWS.DEFAULT })
+  showDefaultView = () => this.setState({ currentView: VIEWS.DEFAULT })
+
+  showEditView = () => this.setState({ currentView: VIEWS.BOARD_EDIT })
+
+  showDeleteView = () => this.setState({ currentView: VIEWS.BOARD_REMOVE })
 
   onDeleteBoard = () => {
     this.props.boardsStore.deleteActiveBoard()
-    this.goToDefaultView()
+    this.showDefaultView()
   }
 
   render() {
@@ -46,37 +49,33 @@ class BoardControls extends React.PureComponent<
       return null
     }
 
-    const showEditView = () =>
-      this.setState({ currentView: BOARD_CONTROLS_VIEWS.BOARD_EDIT })
-    const showDeleteView = () =>
-      this.setState({ currentView: BOARD_CONTROLS_VIEWS.BOARD_REMOVE })
-
     return (
       <div>
         <Dropdown
+          direction="left"
           icon={<Element icon={ELEMENTS.options} size={ELEMENTS_SIZE.small} />}
         >
           <Dropdown.Menu>
-            <Dropdown.Item text="Board options" onClick={showEditView} />
-            <Dropdown.Item text="Delete board" onClick={showDeleteView} />
+            <Dropdown.Item text="Board options" onClick={this.showEditView} />
+            <Dropdown.Item text="Delete board" onClick={this.showDeleteView} />
           </Dropdown.Menu>
         </Dropdown>
 
-        {currentView === BOARD_CONTROLS_VIEWS.BOARD_EDIT && (
+        {currentView === VIEWS.BOARD_EDIT && (
           <BoardOptions
             board={board}
-            onClose={this.goToDefaultView}
-            onSave={this.goToDefaultView}
+            onClose={this.showDefaultView}
+            onSave={this.showDefaultView}
           />
         )}
 
         <Confirm
-          open={currentView === BOARD_CONTROLS_VIEWS.BOARD_REMOVE}
+          open={currentView === VIEWS.BOARD_REMOVE}
           size="tiny"
           header={`Delete board ${board.name}?`}
           content="This operation is irreversible. All ideas from this board will be permanently deleted."
           confirmButton="Delete board"
-          onCancel={this.goToDefaultView}
+          onCancel={this.showDefaultView}
           onConfirm={this.onDeleteBoard}
         />
       </div>

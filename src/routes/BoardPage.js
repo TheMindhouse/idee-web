@@ -17,7 +17,7 @@ type BoardPageState = {
   currentView: string,
 }
 
-const BOARD_PAGE_VIEWS = {
+const VIEWS = {
   DEFAULT: "default",
   BOARD_ADD: "boardAdd",
   BOARD_EDIT: "boardEdit",
@@ -27,11 +27,10 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
   static defaultProps = {}
 
   state = {
-    currentView: BOARD_PAGE_VIEWS.DEFAULT,
+    currentView: VIEWS.DEFAULT,
   }
 
-  goToDefaultView = () =>
-    this.setState({ currentView: BOARD_PAGE_VIEWS.DEFAULT })
+  showDefaultView = () => this.setState({ currentView: VIEWS.DEFAULT })
 
   render() {
     const { currentView } = this.state
@@ -39,18 +38,18 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
       <div className="page-container">
         <Sidebar
           onCreateBoardClick={() =>
-            this.setState({ currentView: BOARD_PAGE_VIEWS.BOARD_ADD })
+            this.setState({ currentView: VIEWS.BOARD_ADD })
           }
         />
 
         <IdeasList />
 
-        {currentView === BOARD_PAGE_VIEWS.BOARD_ADD && (
+        {currentView === VIEWS.BOARD_ADD && (
           <BoardOptions
-            onClose={this.goToDefaultView}
+            onClose={this.showDefaultView}
             onSave={(boardId) => {
               this.props.boardsStore.setActiveBoard(boardId)
-              this.goToDefaultView()
+              this.showDefaultView()
             }}
           />
         )}
