@@ -25,6 +25,6 @@ console.log(
 )
 
 export const CONFIG = {
-  firebase:
-    process.env.NODE_ENV === "production" ? FIREBASE_PRODUCTION : FIREBASE_DEV,
+  firebase: FIREBASE_DEV,
+  // process.env.NODE_ENV === "production" ? FIREBASE_PRODUCTION : FIREBASE_DEV,
 }
