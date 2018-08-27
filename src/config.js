@@ -18,6 +18,12 @@ const FIREBASE_DEV = {
   messagingSenderId: "854949127425",
 }
 
+console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV === "production")
+console.log(
+  process.env.NODE_ENV === "production" ? FIREBASE_PRODUCTION : FIREBASE_DEV
+)
+
 export const CONFIG = {
   firebase:
     process.env.NODE_ENV === "production" ? FIREBASE_PRODUCTION : FIREBASE_DEV,
