@@ -16,7 +16,7 @@
     "react-scripts": "1.1.4",
     "react-toastify": "^4.2.0",
     "rxjs": "^6.2.2",
-    "rxjs-compat": "6.0.0-tactical-rc.1",
+    "rxjs-compat": "^6.2.2",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.82.2"
   },
