@@ -3,6 +3,7 @@ import * as React from "react"
 import arrow from "../../assets/images/icons/arrow.svg"
 import arrowSmall from "../../assets/images/icons/arrow_small.svg"
 import back from "../../assets/images/icons/back.svg"
+import commaLoader from "../../assets/images/icons/comma_loader.svg"
 import deleteIcon from "../../assets/images/icons/delete.svg"
 import facebook from "../../assets/images/icons/facebook.svg"
 import google from "../../assets/images/icons/google.svg"
@@ -25,6 +26,7 @@ export const ELEMENTS = {
   arrow,
   arrowSmall,
   back,
+  commaLoader,
   deleteIcon,
   facebook,
   google,

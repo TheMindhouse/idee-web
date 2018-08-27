@@ -6,6 +6,8 @@ import { IdeasListControls } from "./IdeasListControls"
 import { IdeasCore } from "../../hoc/renderProps/IdeasCore"
 import { IdeaCreateButton } from "../IdeaCreateButton/IdeaCreateButton"
 import { IdeasListItem } from "./IdeasListItem"
+import { IdeasListEmpty } from "./IdeasListEmpty"
+import { IdeasListLoading } from "./IdeasListLoading"
 
 type IdeasListDefaultViewProps = {
   boardId: string,
@@ -94,10 +96,10 @@ class IdeasListDefaultView extends React.PureComponent<
                     />
                   ))
               ) : (
-                <p>No ideas</p>
+                <IdeasListEmpty onClickAdd={showAddView} />
               )
             ) : (
-              <p>Loading...</p>
+              <IdeasListLoading />
             )
           }
         />

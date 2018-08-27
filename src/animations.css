@@ -9,3 +9,16 @@
         background-position: 0% 50%
     }
 }
+
+@keyframes Rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.animation-loader {
+    animation: Rotate 1.5s ease-in-out infinite;
+}
