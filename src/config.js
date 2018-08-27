@@ -11,7 +11,7 @@ const FIREBASE_PRODUCTION = {
 
 const FIREBASE_DEV = {
   apiKey: "AIzaSyAmsLWMStkiaNlh5NpLm3yYabQ5aC6WU6I",
-  authDomain: "idee-app-dev.firebaseapp.com",
+  authDomain: "idee-preview.netlify.com",
   databaseURL: "https://idee-app-dev.firebaseio.com",
   projectId: "idee-app-dev",
   storageBucket: "",
