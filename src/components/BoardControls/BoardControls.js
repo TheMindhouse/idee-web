@@ -5,6 +5,7 @@ import { Confirm, Dropdown } from "semantic-ui-react"
 import { BoardOptions } from "../BoardOptions/BoardOptions"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
 import { withBoards } from "../../hoc/withBoards"
+import { toast } from "react-toastify"
 
 const VIEWS = {
   DEFAULT: "default",
@@ -37,7 +38,10 @@ class BoardControls extends React.PureComponent<
   showDeleteView = () => this.setState({ currentView: VIEWS.BOARD_REMOVE })
 
   onDeleteBoard = () => {
-    this.props.boardsStore.deleteActiveBoard()
+    this.props.boardsStore
+      .deleteActiveBoard()
+      .then(() => toast.success("Board deleted"))
+      .catch(() => toast.error("Error with deleting board"))
     this.showDefaultView()
   }
 

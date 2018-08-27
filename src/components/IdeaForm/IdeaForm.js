@@ -6,6 +6,7 @@ import { Button, Dimmer } from "semantic-ui-react"
 import "./styles/IdeaForm.css"
 import { FormField } from "../Forms/FormField"
 import { SCORE_TEXTS } from "../../constants/scores"
+import { toast } from "react-toastify"
 
 type IdeaFormProps = {
   boardId: string,
@@ -48,12 +49,16 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
     const { idea } = this.state
     this.setState({ isSaving: true })
     this.isEditMode()
-      ? IdeasFacade.updateIdea(idea).then(
-          () =>
-            typeof this.props.onUpdate === "function" &&
-            this.props.onUpdate(idea)
-        )
-      : IdeasFacade.createIdea(idea).then(this.props.onClose)
+      ? IdeasFacade.updateIdea(idea).then(() => {
+          toast.success("Idea successfully updated")
+          if (typeof this.props.onUpdate === "function") {
+            return this.props.onUpdate(idea)
+          }
+        })
+      : IdeasFacade.createIdea(idea).then(() => {
+          toast.success("Idea successfully added")
+          return this.props.onClose()
+        })
   }
 
   render() {

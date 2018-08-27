@@ -10,6 +10,7 @@ import { FormField } from "../Forms/FormField"
 import { isValidEmail } from "../../helpers/strings"
 import { SharedUser } from "../SharedUser/SharedUser"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
+import { toast } from "react-toastify"
 
 type BoardOptionsProps = {
   board?: Board,
@@ -99,10 +100,11 @@ class BoardOptions extends React.PureComponent<
   onBoardCreate = (board: Board) =>
     BoardsFacade.createBoard(board)
       .then((docRef: $npm$firebase$firestore$DocumentReference) => {
-        console.log("Added new board")
+        toast.success("New board created")
         this.props.onSave(docRef.id)
       })
       .catch((error) => {
+        toast.error("Error adding board")
         console.error("Error adding board: ", error)
         this.setState({ isSaving: false })
       })
@@ -110,10 +112,12 @@ class BoardOptions extends React.PureComponent<
   onBoardUpdate = (board: Board): Promise<void> =>
     BoardsFacade.updateBoard(board)
       .then(() => {
+        toast.success("Board updated")
         console.log(`Updated board ${board.name}`)
         this.props.onSave(board.id)
       })
       .catch((error) => {
+        toast.error("Error updating board")
         console.error("Error updating board: ", error)
         this.setState({ isSaving: false })
       })

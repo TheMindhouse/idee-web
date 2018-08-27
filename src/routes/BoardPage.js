@@ -6,6 +6,8 @@ import { IdeasList } from "../components/IdeasList/IdeasList"
 import { BoardOptions } from "../components/BoardOptions/BoardOptions"
 import { withBoards } from "../hoc/withBoards"
 import type { BoardsStoreType } from "../stores/BoardsProvider"
+import { Flip, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 type BoardPageProps = {
   match: Match,
@@ -36,6 +38,19 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
     const { currentView } = this.state
     return (
       <div className="page-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+          transition={Flip}
+        />
+
         <Sidebar
           onCreateBoardClick={() =>
             this.setState({ currentView: VIEWS.BOARD_ADD })

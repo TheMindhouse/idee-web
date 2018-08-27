@@ -119,12 +119,12 @@ class BoardsProvider extends React.PureComponent<
     this.setState({ currentBoard })
   }
 
-  deleteActiveBoard = () => {
+  deleteActiveBoard = (): Promise<mixed> => {
     const { boards, currentBoard } = this.state
     if (!currentBoard) {
-      return
+      throw new Error("No active board")
     }
-    BoardsFacade.deleteBoard(currentBoard.id).then(() => {
+    return BoardsFacade.deleteBoard(currentBoard.id).then(() => {
       if (boards && boards.length > 1) {
         const firstBoard = boards.find(
           (board: Board) => board.id !== currentBoard.id
@@ -156,7 +156,7 @@ export type BoardsStoreType = {
   boards: ?Array<Board>,
   currentBoard: ?Board,
   setActiveBoard: (string) => void,
-  deleteActiveBoard: () => void,
+  deleteActiveBoard: () => Promise<mixed>,
 }
 
 export { BoardsProvider, BoardsContext }

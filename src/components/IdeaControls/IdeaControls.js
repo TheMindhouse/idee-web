@@ -4,6 +4,7 @@ import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 import { Confirm, Dropdown } from "semantic-ui-react"
 import { IdeasFacade } from "../../facades/IdeasFacade"
 import { Idea } from "../../models/Idea"
+import { toast } from "react-toastify"
 
 const VIEWS = {
   DEFAULT: "default",
@@ -35,7 +36,10 @@ class IdeaControls extends React.PureComponent<
   showDeleteView = () => this.setState({ currentView: VIEWS.IDEA_REMOVE })
 
   onDeleteIdea = () => {
-    IdeasFacade.deleteIdea(this.props.idea).then(this.props.onDelete)
+    IdeasFacade.deleteIdea(this.props.idea).then(() => {
+      toast.success("Idea deleted")
+      return this.props.onDelete()
+    })
   }
 
   render() {
