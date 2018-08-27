@@ -8,6 +8,7 @@ import { IdeaCreateButton } from "../IdeaCreateButton/IdeaCreateButton"
 import { IdeasListItem } from "./IdeasListItem"
 import { IdeasListEmpty } from "./IdeasListEmpty"
 import { IdeasListLoading } from "./IdeasListLoading"
+import { DelayRender } from "../DelayRender/DelayRender"
 
 type IdeasListDefaultViewProps = {
   boardId: string,
@@ -99,7 +100,9 @@ class IdeasListDefaultView extends React.PureComponent<
                 <IdeasListEmpty onClickAdd={showAddView} />
               )
             ) : (
-              <IdeasListLoading />
+              <DelayRender time={500}>
+                <IdeasListLoading />
+              </DelayRender>
             )
           }
         />

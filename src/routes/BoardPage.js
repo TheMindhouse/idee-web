@@ -8,6 +8,7 @@ import { withBoards } from "../hoc/withBoards"
 import type { BoardsStoreType } from "../stores/BoardsProvider"
 import { Flip, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { PageLoading } from "../components/PageLoading/PageLoading"
 
 type BoardPageProps = {
   match: Match,
@@ -50,6 +51,8 @@ class BoardPage extends React.PureComponent<BoardPageProps, BoardPageState> {
           pauseOnHover
           transition={Flip}
         />
+
+        {!this.props.boardsStore.boards && <PageLoading />}
 
         <Sidebar
           onCreateBoardClick={() =>
