@@ -7,7 +7,7 @@ import { URLHelper } from "./helpers/URLHelper"
 import { SignIn } from "./routes/SignIn"
 import { AuthProvider } from "./stores/AuthProvider"
 import { BoardsProvider } from "./stores/BoardsProvider"
-import { ProtectedRoute } from "./routes/ProtectedRoute"
+import { ErrorPage404 } from "./routes/ErrorPage404"
 // import ReactGA from "react-ga"
 // import { hotjar } from "react-hotjar"
 
@@ -27,34 +27,35 @@ const logPageView = () => {
 class App extends Component<{}> {
   render() {
     return (
-      <AuthProvider>
-        <BoardsProvider>
-          <Router>
+      <Router>
+        <AuthProvider>
+          <BoardsProvider>
             <ScrollToTop>
               <div className="AppContent">
                 <Route path="/" component={logPageView} />
                 <Switch>
                   <Route exact path={URLHelper.login} component={SignIn} />
-                  <ProtectedRoute>
-                    <Route
-                      exact
-                      path={URLHelper.homepage}
-                      component={BoardPage}
-                    />
-                    <Route
-                      exact
-                      path={URLHelper.board(":boardId")}
-                      component={BoardPage}
-                    />
-                  </ProtectedRoute>
-                  {/*<Route path="/404" component={ErrorPage404} />*/}
-                  {/*<Route component={ErrorPage404} />*/}
+                  <Route
+                    exact
+                    path={URLHelper.homepage}
+                    component={BoardPage}
+                  />
+                  <Route
+                    exact
+                    path={URLHelper.board(":boardId")}
+                    component={BoardPage}
+                  />
+                  <Route
+                    path={URLHelper.pageNotFound}
+                    component={ErrorPage404}
+                  />
+                  <Route component={ErrorPage404} />
                 </Switch>
               </div>
             </ScrollToTop>
-          </Router>
-        </BoardsProvider>
-      </AuthProvider>
+          </BoardsProvider>
+        </AuthProvider>
+      </Router>
     )
   }
 }

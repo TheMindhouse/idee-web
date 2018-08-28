@@ -13,10 +13,8 @@ export class BoardsFacade {
       createdAt: FieldValue.serverTimestamp(),
       modifiedAt: FieldValue.serverTimestamp(),
     }
-    return (
-      // $FlowFixMe
-      db.collection(COLLECTIONS.BOARDS).add(boardToAdd)
-    )
+    // $FlowFixMe
+    return db.collection(COLLECTIONS.BOARDS).add(boardToAdd)
   }
 
   static updateBoard(board: Board): Promise<void> {

@@ -2,6 +2,7 @@
 export const URLHelper = {
   homepage: "/",
   login: "/login",
+  pageNotFound: "/404",
   board: (boardId: string) => `/board/${boardId}`,
   boardNew: "/board/new",
   boardEdit: (boardId: string) => `/board/${boardId}/edit`,

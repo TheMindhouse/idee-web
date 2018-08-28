@@ -14,7 +14,7 @@ type AuthProviderState = {
   authUser: ?User,
 }
 
-class AuthProvider extends React.PureComponent<
+class AuthProvider extends React.Component<
   AuthProviderProps,
   AuthProviderState
 > {

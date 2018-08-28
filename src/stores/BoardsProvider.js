@@ -5,14 +5,16 @@ import { Board } from "../models/Board"
 import { FieldPath } from "../helpers/firebaseUtils"
 import * as Rx from "rxjs/Rx"
 import { BOARD_ROLES, COLLECTIONS } from "../constants/firebase"
-import { type RouterHistory } from "react-router-dom"
+import { type RouterHistory, withRouter } from "react-router-dom"
 import { AuthFacade } from "../facades/AuthFacade"
 import { BoardsFacade } from "../facades/BoardsFacade"
+import { URLHelper } from "../helpers/URLHelper"
 
 const BoardsContext = React.createContext()
 
 type BoardsProviderProps = {
   children: ?React.Node,
+  history: RouterHistory,
 }
 
 type BoardsProviderState = {
@@ -20,7 +22,7 @@ type BoardsProviderState = {
   currentBoard: ?Board,
 }
 
-class BoardsProvider extends React.PureComponent<
+class BoardsProvider extends React.Component<
   BoardsProviderProps,
   BoardsProviderState
 > {
@@ -69,7 +71,6 @@ class BoardsProvider extends React.PureComponent<
 
     Rx.Observable.combineLatest(owned$, admin$, editor$, reader$).subscribe(
       (boardsContainers: Array<Array<Board>>) => {
-        console.log("Boards updated")
         const boards: Array<Board> = [].concat.apply([], [...boardsContainers])
         const currentBoard = this.state.currentBoard
           ? boards.find(
@@ -78,7 +79,12 @@ class BoardsProvider extends React.PureComponent<
                 this.state.currentBoard.id === board.id
             )
           : boards[0]
-        this.setState({ boards, currentBoard })
+        console.log("Boards updated", boards)
+        if (!boards.length) {
+          this.createDefaultBoard()
+        } else {
+          this.setState({ boards, currentBoard })
+        }
       }
     )
   }
@@ -130,10 +136,11 @@ class BoardsProvider extends React.PureComponent<
       (board: Board) => board.id === boardId
     )
     if (!foundBoards.length) {
-      throw new Error("No board found with given boardId")
+      return this.props.history.push(URLHelper.pageNotFound)
     }
     const currentBoard = foundBoards[0]
     this.setState({ currentBoard })
+    this.props.history.push(URLHelper.board(boardId))
   }
 
   leaveBoard = (board: Board, email: string): Promise<void> => {
@@ -148,12 +155,28 @@ class BoardsProvider extends React.PureComponent<
     return BoardsFacade.deleteBoard(currentBoard).then(this.selectFirstBoard)
   }
 
+  /**
+   * If user doesn't have any boards, create a default one.
+   */
+  createDefaultBoard = (): Promise<mixed> => {
+    const user = AuthFacade.getCurrentUser()
+    if (user) {
+      const board = new Board({
+        name: "my ideas",
+        ownerId: user.id,
+      })
+      return BoardsFacade.createBoard(board)
+    }
+    throw new Error("User not logged in")
+  }
+
   render() {
     const boardStore: BoardsStoreType = {
       ...this.state,
       setActiveBoard: this.setActiveBoard,
       leaveBoard: this.leaveBoard,
       deleteActiveBoard: this.deleteActiveBoard,
+      createDefaultBoard: this.createDefaultBoard,
     }
     return (
       <BoardsContext.Provider value={boardStore}>
@@ -169,6 +192,8 @@ export type BoardsStoreType = {
   setActiveBoard: (?string) => void,
   leaveBoard: (Board, string) => Promise<void>,
   deleteActiveBoard: () => Promise<void>,
+  createDefaultBoard: () => Promise<mixed>,
 }
 
+BoardsProvider = withRouter(BoardsProvider)
 export { BoardsProvider, BoardsContext }
