@@ -3,11 +3,14 @@ import * as React from "react"
 import { withAuth } from "../../hoc/withAuth"
 import { withBoards } from "../../hoc/withBoards"
 import type { BoardsStoreType } from "../../stores/BoardsProvider"
-import { BoardControls } from "../BoardControls/BoardControls"
+import { BoardControlsOwner } from "../BoardControls/BoardControlsOwner"
 import "./styles/IdeasListHeader.css"
+import { User } from "../../models/User"
+import { BoardControlsEditor } from "../BoardControls/BoardControlsEditor"
 
 type IdeasListHeaderProps = {
   boardsStore: BoardsStoreType,
+  authUser: User,
 }
 
 class IdeasListHeader extends React.PureComponent<IdeasListHeaderProps> {
@@ -23,7 +26,11 @@ class IdeasListHeader extends React.PureComponent<IdeasListHeaderProps> {
     return (
       <div className="IdeasListHeader">
         <h1 className="IdeasListHeader__Name">{board.name}</h1>
-        <BoardControls />
+        {board.isOwner(this.props.authUser.id) ? (
+          <BoardControlsOwner />
+        ) : (
+          <BoardControlsEditor />
+        )}
       </div>
     )
   }

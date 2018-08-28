@@ -104,6 +104,23 @@ class BoardsProvider extends React.PureComponent<
       rxSubject$.next(boards)
     })
 
+  /**
+   * Set first board as active
+   */
+  selectFirstBoard = () => {
+    const { boards, currentBoard } = this.state
+    if (boards && boards.length > 0) {
+      const firstBoard = currentBoard
+        ? boards.find((board: Board) => board.id !== currentBoard.id)
+        : boards[0]
+      if (firstBoard) {
+        this.setActiveBoard(firstBoard.id)
+      }
+    } else {
+      this.setActiveBoard(null)
+    }
+  }
+
   setActiveBoard = (boardId: ?string): void => {
     const boards = this.state.boards
     if (!boards || !boardId) {
@@ -119,29 +136,23 @@ class BoardsProvider extends React.PureComponent<
     this.setState({ currentBoard })
   }
 
-  deleteActiveBoard = (): Promise<mixed> => {
-    const { boards, currentBoard } = this.state
+  leaveBoard = (board: Board, email: string): Promise<void> => {
+    return BoardsFacade.removeRole(board, email).then(this.selectFirstBoard)
+  }
+
+  deleteActiveBoard = (): Promise<void> => {
+    const { currentBoard } = this.state
     if (!currentBoard) {
       throw new Error("No active board")
     }
-    return BoardsFacade.deleteBoard(currentBoard.id).then(() => {
-      if (boards && boards.length > 1) {
-        const firstBoard = boards.find(
-          (board: Board) => board.id !== currentBoard.id
-        )
-        if (firstBoard) {
-          this.setActiveBoard(firstBoard.id)
-        }
-      } else {
-        this.setActiveBoard(null)
-      }
-    })
+    return BoardsFacade.deleteBoard(currentBoard).then(this.selectFirstBoard)
   }
 
   render() {
     const boardStore: BoardsStoreType = {
       ...this.state,
       setActiveBoard: this.setActiveBoard,
+      leaveBoard: this.leaveBoard,
       deleteActiveBoard: this.deleteActiveBoard,
     }
     return (
@@ -155,8 +166,9 @@ class BoardsProvider extends React.PureComponent<
 export type BoardsStoreType = {
   boards: ?Array<Board>,
   currentBoard: ?Board,
-  setActiveBoard: (string) => void,
-  deleteActiveBoard: () => Promise<mixed>,
+  setActiveBoard: (?string) => void,
+  leaveBoard: (Board, string) => Promise<void>,
+  deleteActiveBoard: () => Promise<void>,
 }
 
 export { BoardsProvider, BoardsContext }

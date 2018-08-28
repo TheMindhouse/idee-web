@@ -10,3 +10,11 @@ import { firebase } from "../facades/FirebaseFacade"
  * @type {firebase.firestore.FieldPath}
  */
 export const FieldPath = firebase.firestore.FieldPath
+
+/**
+ * FieldValue is a utility used in the app to mark certain fields for deletion
+ * or to be filled with a timestamp by the server
+ *
+ */
+export const FieldValue: $npm$firebase$firestore$FieldValue =
+  firebase.firestore.FieldValue

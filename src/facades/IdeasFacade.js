@@ -1,14 +1,15 @@
 // @flow
-import { db, firebase } from "./FirebaseFacade"
+import { db } from "./FirebaseFacade"
 import { COLLECTIONS } from "../constants/firebase"
 import { Idea } from "../models/Idea"
+import { FieldValue } from "../helpers/firebaseUtils"
 
 export class IdeasFacade {
   static createIdea(idea: Idea): Promise<mixed> {
     const ideaToAdd = {
       ...idea.toExport(),
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      modifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
+      modifiedAt: FieldValue.serverTimestamp(),
     }
     return (
       db
@@ -23,7 +24,7 @@ export class IdeasFacade {
   static updateIdea(idea: Idea): Promise<mixed> {
     const ideaToUpdate = {
       ...idea.toExport(),
-      modifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      modifiedAt: FieldValue.serverTimestamp(),
     }
     return (
       db

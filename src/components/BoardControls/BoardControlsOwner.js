@@ -13,17 +13,17 @@ const VIEWS = {
   BOARD_REMOVE: "boardRemove",
 }
 
-type BoardControlsProps = {
+type BoardControlsOwnerProps = {
   boardsStore: BoardsStoreType,
 }
 
-type BoardControlsState = {
+type BoardControlsOwnerState = {
   currentView: string,
 }
 
-class BoardControls extends React.PureComponent<
-  BoardControlsProps,
-  BoardControlsState
+class BoardControlsOwner extends React.PureComponent<
+  BoardControlsOwnerProps,
+  BoardControlsOwnerState
 > {
   static defaultProps = {}
 
@@ -87,5 +87,5 @@ class BoardControls extends React.PureComponent<
   }
 }
 
-BoardControls = withBoards(BoardControls)
-export { BoardControls }
+BoardControlsOwner = withBoards(BoardControlsOwner)
+export { BoardControlsOwner }

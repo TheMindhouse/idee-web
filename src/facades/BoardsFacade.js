@@ -1,7 +1,8 @@
 // @flow
 import { Board } from "../models/Board"
-import { db, firebase } from "./FirebaseFacade"
+import { db } from "./FirebaseFacade"
 import { COLLECTIONS } from "../constants/firebase"
+import { FieldPath, FieldValue } from "../helpers/firebaseUtils"
 
 export class BoardsFacade {
   static createBoard(
@@ -9,8 +10,8 @@ export class BoardsFacade {
   ): Promise<$npm$firebase$firestore$DocumentReference> {
     const boardToAdd = {
       ...board.toExport(),
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      modifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
+      modifiedAt: FieldValue.serverTimestamp(),
     }
     return (
       // $FlowFixMe
@@ -21,7 +22,7 @@ export class BoardsFacade {
   static updateBoard(board: Board): Promise<void> {
     const boardToUpdate = {
       ...board.toExport(),
-      modifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      modifiedAt: FieldValue.serverTimestamp(),
     }
     return db
       .collection(COLLECTIONS.BOARDS)
@@ -29,10 +30,18 @@ export class BoardsFacade {
       .update(boardToUpdate)
   }
 
-  static deleteBoard(boardId: string) {
+  static removeRole(board: Board, email: string): Promise<void> {
+    const emailPath = new FieldPath("roles", email)
     return db
       .collection(COLLECTIONS.BOARDS)
-      .doc(boardId)
+      .doc(board.id)
+      .update(emailPath, FieldValue.delete())
+  }
+
+  static deleteBoard(board: Board): Promise<void> {
+    return db
+      .collection(COLLECTIONS.BOARDS)
+      .doc(board.id)
       .delete()
   }
 }
