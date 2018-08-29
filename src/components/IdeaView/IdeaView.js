@@ -5,6 +5,7 @@ import { Button, Dimmer, Divider } from "semantic-ui-react"
 import "./styles/IdeaView.css"
 import { SCORE_TEXTS } from "../../constants/scores"
 import { IdeaControls } from "../IdeaControls/IdeaControls"
+import { IdeaViewTotalScore } from "./IdeaViewTotalScore"
 
 type IdeaViewProps = {
   idea: Idea,
@@ -63,11 +64,8 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
                 </span>
               </p>
             </div>
-            <Divider />
-            <span>
-              <b>total score</b>
-            </span>
-            <p className="IdeaView__TotalScore">{idea.getAverage()}</p>
+
+            <IdeaViewTotalScore value={idea.getAverage()} />
           </div>
           <div>
             <Button onClick={this.props.onClose}>Close</Button>

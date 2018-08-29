@@ -5,6 +5,7 @@
     right: 0;
     background: #fff;
     color: #27127c;
+    font-size: 16px;
     width: 600px;
     max-width: 100vw;
     text-align: left;
@@ -18,7 +19,13 @@
     font-size: 45px;
 }
 
-.IdeaForm__Score {
-    font-size: 70px;
-    font-weight: bold;
+.IdeaFormSlider {
+    margin-top: 20px;
+}
+
+.IdeaFormSlider__Header {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    font-size: 16px;
 }

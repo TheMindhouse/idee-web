@@ -7,6 +7,8 @@ import "./styles/IdeaForm.css"
 import { FormField } from "../Forms/FormField"
 import { SCORE_TEXTS } from "../../constants/scores"
 import { toast } from "react-toastify"
+import { RangeSlider } from "../RangeSlider/RangeSlider"
+import { IdeaViewTotalScore } from "../IdeaView/IdeaViewTotalScore"
 
 type IdeaFormProps = {
   boardId: string,
@@ -85,37 +87,53 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
                 onChange={this.onChangeField.bind(null, "description", false)}
               />
             </FormField>
-            <p>Ease:</p>
-            <input
-              type="range"
-              min={0}
-              max={10}
-              value={ease}
-              onChange={this.onChangeField.bind(null, "ease", true)}
-            />{" "}
-            {ease}
-            {SCORE_TEXTS.EASE[ease]}
-            <p>Confidence:</p>
-            <input
-              type="range"
-              min={0}
-              max={10}
-              value={confidence}
-              onChange={this.onChangeField.bind(null, "confidence", true)}
-            />{" "}
-            {confidence}
-            {SCORE_TEXTS.CONFIDENCE[confidence]}
-            <p>Impact:</p>
-            <input
-              type="range"
-              min={0}
-              max={10}
-              value={impact}
-              onChange={this.onChangeField.bind(null, "impact", true)}
-            />{" "}
-            {impact}
-            {SCORE_TEXTS.IMPACT[impact]}
-            <p className="IdeaForm__Score">{this.state.idea.getAverage()}</p>
+
+            <div className="IdeaFormSlider">
+              <div className="IdeaFormSlider__Header">
+                <span>
+                  <b>ease</b>
+                </span>
+                <small>{SCORE_TEXTS.EASE[ease]}</small>
+              </div>
+              <RangeSlider
+                value={ease}
+                min={0}
+                max={10}
+                onChange={this.onChangeField.bind(null, "ease", true)}
+              />
+            </div>
+
+            <div className="IdeaFormSlider">
+              <div className="IdeaFormSlider__Header">
+                <span>
+                  <b>confidence</b>
+                </span>
+                <small>{SCORE_TEXTS.CONFIDENCE[confidence]}</small>
+              </div>
+              <RangeSlider
+                value={confidence}
+                min={0}
+                max={10}
+                onChange={this.onChangeField.bind(null, "confidence", true)}
+              />
+            </div>
+
+            <div className="IdeaFormSlider">
+              <div className="IdeaFormSlider__Header">
+                <span>
+                  <b>impact</b>
+                </span>
+                <small>{SCORE_TEXTS.IMPACT[impact]}</small>
+              </div>
+              <RangeSlider
+                value={impact}
+                min={0}
+                max={10}
+                onChange={this.onChangeField.bind(null, "impact", true)}
+              />
+            </div>
+
+            <IdeaViewTotalScore value={this.state.idea.getAverage()} />
           </div>
           <div>
             <Button onClick={this.props.onClose}>Cancel</Button>

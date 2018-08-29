@@ -1,0 +1,15 @@
+.IdeaViewTotalScore {
+    border-top: 1px solid #f0eef5;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.IdeaViewTotalScore__Caption {
+    display: block;
+    font-size: 16px;
+}
+
+.IdeaViewTotalScore__Value {
+    font-size: 70px;
+    font-weight: bold;
+}
