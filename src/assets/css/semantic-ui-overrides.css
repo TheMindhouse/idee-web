@@ -1,0 +1,11 @@
+.ui.button {
+    border-radius: 0;
+}
+
+.ui.button.positive {
+    background: -webkit-linear-gradient(45deg, #00e7e4, #5feb72, #bfef00);
+}
+
+.ui.button.positive:hover {
+    background: -webkit-linear-gradient(45deg, #00f3f0, #62f275, #c7f900);
+}

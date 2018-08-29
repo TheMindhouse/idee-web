@@ -10,7 +10,9 @@ type IdeasListEmptyProps = {
 const IdeasListEmpty = (props: IdeasListEmptyProps) => {
   return (
     <div className="IdeasListEmpty">
-      <p>No ideas in this board</p>
+      <p>
+        <b>no ideas in this board yet</b>
+      </p>
       <Button onClick={props.onClickAdd} positive>
         Add new idea
       </Button>
