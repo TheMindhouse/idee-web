@@ -1,5 +1,10 @@
 .SidebarUser {
     padding: 20px;
+    background-color: #fafafa;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position-x: 110%;
+    background-position-y: 10px;
 }
 
 .SidebarUser__Avatar {

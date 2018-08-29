@@ -6,6 +6,7 @@ import { withAuth } from "../../hoc/withAuth"
 import "./styles/SidebarUser.css"
 import { Dropdown } from "semantic-ui-react"
 import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
+import ideeLogo from "../../assets/images/idee_logo.svg"
 
 type SidebarUserProps = {
   authUser: User,
@@ -14,7 +15,10 @@ type SidebarUserProps = {
 const SidebarUser = withAuth((props: SidebarUserProps) => {
   const { authUser } = props
   return (
-    <div className="SidebarUser">
+    <div
+      className="SidebarUser"
+      style={{ backgroundImage: `url(${ideeLogo})` }}
+    >
       <img src={authUser.avatarUrl} className="SidebarUser__Avatar" />
       <div className="SidebarUser__Content">
         <div>
