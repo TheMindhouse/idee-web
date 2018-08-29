@@ -22,6 +22,7 @@ type BoardOptionsProps = {
 
 type BoardOptionsState = {
   name: string,
+  email: string,
   shareToEmails: Array<string>,
   emailInvalidError: boolean,
   isSaving: boolean,
@@ -37,6 +38,7 @@ class BoardOptions extends React.PureComponent<
     super(props)
     this.state = {
       name: props.board ? props.board.name : "",
+      email: "",
       shareToEmails: props.board ? Object.keys(props.board.roles) : [],
       emailInvalidError: false,
       isSaving: false,
@@ -62,13 +64,16 @@ class BoardOptions extends React.PureComponent<
     this.setState({ shareToEmails })
   }
 
-  handleKeyPress = (event: any) => {
-    this.setState({ emailInvalidError: false })
+  onChangeEmail = (event: SyntheticEvent<HTMLInputElement>) => {
+    const email = event.currentTarget.value
+    this.setState({ email, emailInvalidError: false })
+  }
+
+  onKeyPressed = (event: any) => {
     if (event.key === "Enter") {
-      const email = event.currentTarget.value
-      if (isValidEmail(email)) {
-        this.addShareToEmail(email)
-        event.currentTarget.value = ""
+      if (isValidEmail(this.state.email)) {
+        this.addShareToEmail(this.state.email)
+        this.setState({ email: "" })
       } else {
         this.setState({ emailInvalidError: true })
       }
@@ -124,7 +129,7 @@ class BoardOptions extends React.PureComponent<
 
   render() {
     const { board, onClose } = this.props
-    const { name, shareToEmails, isSaving } = this.state
+    const { name, email, shareToEmails, isSaving } = this.state
     return (
       <Modal centered={false} onClose={onClose} open={true} size="tiny">
         <Modal.Header>
@@ -145,8 +150,17 @@ class BoardOptions extends React.PureComponent<
               label="E-mail address to share"
               error={this.state.emailInvalidError}
             >
-              <input type="text" onKeyPress={this.handleKeyPress} />
+              <input
+                type="text"
+                value={email}
+                onChange={this.onChangeEmail}
+                onKeyPress={this.onKeyPressed}
+              />
               <FormField.FormError message="Enter a valid e-mail address" />
+              {isValidEmail(email) && (
+                <FormField.FormRightLabel text="press enter to add" />
+              )}
+              <span />
             </FormField>
             {shareToEmails.map((email: string, index: number) => (
               <SharedUser
