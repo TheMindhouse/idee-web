@@ -28,7 +28,7 @@ class IdeasList extends React.PureComponent<IdeasListProps, IdeasListState> {
   static defaultProps = {}
 
   state = {
-    currentView: VIEWS.IDEA_ADD,
+    currentView: VIEWS.DEFAULT,
     currentIdea: null,
   }
 
