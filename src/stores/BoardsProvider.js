@@ -45,11 +45,11 @@ class BoardsProvider extends React.Component<
   }
 
   subscribe = () => {
+    this.unsubscribe()
     const user = AuthFacade.getCurrentUser()
     if (!user) {
       return
     }
-    this.unsubscribe()
     const collection = db.collection(COLLECTIONS.BOARDS)
     const userId = user.id
     const emailPath = new FieldPath("roles", user.email)

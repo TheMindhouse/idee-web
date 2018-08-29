@@ -21,7 +21,7 @@ class AuthProvider extends React.Component<
   static defaultProps = {}
 
   state = {
-    authUser: null,
+    authUser: undefined,
   }
 
   componentDidMount() {

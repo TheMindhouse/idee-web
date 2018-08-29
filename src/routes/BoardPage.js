@@ -9,7 +9,6 @@ import type { BoardsStoreType } from "../stores/BoardsProvider"
 import { Flip, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { PageLoading } from "../components/PageLoading/PageLoading"
-import { ProtectedRoute } from "./ProtectedRoute"
 
 type BoardPageProps = {
   match: Match,
@@ -54,42 +53,40 @@ class BoardPage extends React.Component<BoardPageProps, BoardPageState> {
     console.log("board page")
     const { currentView } = this.state
     return (
-      <ProtectedRoute>
-        <div className="page-container">
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnVisibilityChange
-            draggable
-            pauseOnHover
-            transition={Flip}
+      <div className="page-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+          transition={Flip}
+        />
+
+        {!this.props.boardsStore.boards && <PageLoading />}
+
+        <Sidebar
+          onCreateBoardClick={() =>
+            this.setState({ currentView: VIEWS.BOARD_ADD })
+          }
+        />
+
+        <IdeasList />
+
+        {currentView === VIEWS.BOARD_ADD && (
+          <BoardOptions
+            onClose={this.showDefaultView}
+            onSave={(boardId) => {
+              this.props.boardsStore.setActiveBoard(boardId)
+              this.showDefaultView()
+            }}
           />
-
-          {!this.props.boardsStore.boards && <PageLoading />}
-
-          <Sidebar
-            onCreateBoardClick={() =>
-              this.setState({ currentView: VIEWS.BOARD_ADD })
-            }
-          />
-
-          <IdeasList />
-
-          {currentView === VIEWS.BOARD_ADD && (
-            <BoardOptions
-              onClose={this.showDefaultView}
-              onSave={(boardId) => {
-                this.props.boardsStore.setActiveBoard(boardId)
-                this.showDefaultView()
-              }}
-            />
-          )}
-        </div>
-      </ProtectedRoute>
+        )}
+      </div>
     )
   }
 }

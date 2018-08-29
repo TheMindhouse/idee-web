@@ -8,6 +8,7 @@ import { SignIn } from "./routes/SignIn"
 import { AuthProvider } from "./stores/AuthProvider"
 import { BoardsProvider } from "./stores/BoardsProvider"
 import { ErrorPage404 } from "./routes/ErrorPage404"
+import { requireAuthOrRedirect } from "./hoc/requireAuthOrRedirect"
 // import ReactGA from "react-ga"
 // import { hotjar } from "react-hotjar"
 
@@ -38,12 +39,12 @@ class App extends Component<{}> {
                   <Route
                     exact
                     path={URLHelper.homepage}
-                    component={BoardPage}
+                    component={requireAuthOrRedirect(BoardPage)}
                   />
                   <Route
                     exact
                     path={URLHelper.board(":boardId")}
-                    component={BoardPage}
+                    component={requireAuthOrRedirect(BoardPage)}
                   />
                   <Route
                     path={URLHelper.pageNotFound}
