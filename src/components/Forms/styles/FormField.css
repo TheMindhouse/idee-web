@@ -10,12 +10,14 @@
     left: 10px;
     font-size: 13px;
     font-weight: 800;
-    color: #999;
+    color: #27127c;
+    opacity: 0.4;
     transition: all ease-in-out 0.2s;
+    pointer-events: none;
 }
 
 .FormField:focus-within .FormField__Label {
-    color: #27127c;
+    opacity: 1;
 }
 
 .FormField input,

@@ -14,7 +14,7 @@ const IdeasListEmpty = (props: IdeasListEmptyProps) => {
         <b>no ideas in this board yet</b>
       </p>
       <Button onClick={props.onClickAdd} positive>
-        Add new idea
+        <b>add new idea</b>
       </Button>
     </div>
   )

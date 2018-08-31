@@ -36,3 +36,14 @@ h1, h2, h3, h4, h5 {
 .text-center {
     text-align: center;
 }
+
+.text-color-gradient {
+    background: -webkit-linear-gradient(45deg, #00e7e4, #5feb72, #bfef00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.color-primary { color: #27127c; }
+.color-gray { color: #777; }
+.color-lgray { color: #999 }
+

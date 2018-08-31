@@ -21,14 +21,14 @@ const IdeasListControlsShare = withAuth(
     const isShared = board.isShared()
     if (!isShared) {
       return (
-        <div className="IdeasListControlsShare">
+        <div className="IdeasListControlsShare color-lgray">
           <span className="IdeasListControlsShare__Text">not shared</span>
         </div>
       )
     }
     if (isShared && board.isOwner(props.authUser.id)) {
       return (
-        <div className="IdeasListControlsShare">
+        <div className="IdeasListControlsShare color-lgray">
           <span className="IdeasListControlsShare__Text">shared</span>
           <Element icon={ELEMENTS.share} />
         </div>
@@ -36,7 +36,7 @@ const IdeasListControlsShare = withAuth(
     }
     if (isShared && !board.isOwner(props.authUser.id)) {
       return (
-        <div className="IdeasListControlsShare">
+        <div className="IdeasListControlsShare color-lgray">
           <span className="IdeasListControlsShare__Text">shared to you</span>
           <Element icon={ELEMENTS.share} />
         </div>

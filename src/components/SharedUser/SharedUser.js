@@ -48,24 +48,27 @@ class SharedUser extends React.PureComponent<SharedUserProps, SharedUserState> {
         {user && (
           <div className="SharedUser__Details">
             <span className="SharedUser__Name">{user.name}</span>
-            <span className="SharedUser__Email">{user.email}</span>
+            <span className="SharedUser__Email color-lgray">{user.email}</span>
           </div>
         )}
         {!user && (
           <div className="SharedUser__Details">
-            <span className="SharedUser__Email">{this.props.email}</span>
+            <span className="SharedUser__Email color-lgray">
+              {this.props.email}
+            </span>
           </div>
         )}
-        <div className="SharedUser__Role">
+        <div className="SharedUser__Role color-lgray">
           <span>editor</span>
         </div>
         <div className="SharedUser__Controls">
-          <Element
-            icon={ELEMENTS.deleteIcon}
-            size={ELEMENTS_SIZE.tiny}
-            className="SharedUser__Delete"
-            onClick={this.props.onRemove}
-          />
+          <div onClick={this.props.onRemove}>
+            <Element
+              icon={ELEMENTS.deleteIcon}
+              size={ELEMENTS_SIZE.tiny}
+              className="SharedUser__Delete"
+            />
+          </div>
         </div>
       </div>
     )

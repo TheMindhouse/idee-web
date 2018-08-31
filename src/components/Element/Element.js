@@ -23,7 +23,6 @@ type ElementProps = {
   width?: string,
   className?: string,
   style?: Object,
-  onClick?: Function,
 }
 
 export const ELEMENTS = {
@@ -63,7 +62,6 @@ const Element = (props: ElementProps) => {
       className="Element"
       svgClassName={props.className}
       aria-hidden="true"
-      onClick={props.onClick}
     />
   )
 }

@@ -37,12 +37,10 @@
 
 .SharedUser__Email {
     font-size: 12px;
-    color: #999;
 }
 
 .SharedUser__Role {
     flex-shrink: 0;
-    color: #999;
     font-size: 12px;
     text-transform: uppercase;
 }

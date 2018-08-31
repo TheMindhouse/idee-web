@@ -36,7 +36,7 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
         <div className="IdeaView">
           <div>
             <div className="IdeaView__Header">
-              <p className="IdeaView__Name">{idea.name}</p>
+              <p className="IdeaView__Name text-color-gradient">{idea.name}</p>
               <IdeaControls idea={idea} onEdit={onEdit} onDelete={onClose} />
             </div>
             <p className="IdeaView__Description">{idea.description}</p>
