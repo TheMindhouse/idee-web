@@ -20,6 +20,9 @@ type IdeaFormProps = {
 type IdeaFormState = {
   idea: Idea,
   isSaving: boolean,
+  errors: {
+    name?: boolean,
+  },
 }
 
 class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
@@ -28,6 +31,7 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
   state = {
     idea: this.props.idea || new Idea({ boardId: this.props.boardId }),
     isSaving: false,
+    errors: {},
   }
 
   isEditMode = () => this.props.idea instanceof Idea
@@ -47,7 +51,22 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
     this.setState({ idea })
   }
 
+  validateIdea = (): boolean => {
+    const { idea } = this.state
+    let isValid = true
+    const errors = {}
+    if (idea.name === "") {
+      errors.name = true
+      isValid = false
+    }
+    this.setState({ errors })
+    return isValid
+  }
+
   onSave = () => {
+    if (!this.validateIdea()) {
+      return
+    }
     const { idea } = this.state
     this.setState({ isSaving: true })
     this.isEditMode()
@@ -73,13 +92,14 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
             <h2 className="IdeaForm__Header">
               {this.isEditMode() ? "Edit idea" : "Add new idea"}
             </h2>
-            <FormField label="Name of the idea">
+            <FormField label="Name of the idea" error={this.state.errors.name}>
               <input
                 type="text"
                 onChange={this.onChangeField.bind(null, "name", false)}
                 autoFocus
                 value={name}
               />
+              <FormField.FormError message="Enter a name" />
             </FormField>
             <FormField label="Description">
               <textarea
