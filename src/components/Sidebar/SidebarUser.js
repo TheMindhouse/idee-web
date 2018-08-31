@@ -23,7 +23,9 @@ const SidebarUser = withAuth((props: SidebarUserProps) => {
       <div className="SidebarUser__Content">
         <div>
           <p className="SidebarUser__Name">{authUser.name}</p>
-          <p className="SidebarUser__Email">{authUser.email}</p>
+          {authUser.email && (
+            <p className="SidebarUser__Email">{authUser.email}</p>
+          )}
         </div>
         <div className="SidebarUser__Menu">
           <Dropdown

@@ -21,25 +21,10 @@
     overflow: auto;
 }
 
-.SidebarContent__CreateBoardButton {
-    font-family: 'Catamaran', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: none;
-    padding: 20px;
-    border: 0;
-    outline: none;
-    color: #27127c;
-    cursor: pointer;
+button.SidebarContent__CreateBoardButton {
+    justify-content: flex-start;
 }
 
-.SidebarContent__CreateBoardButton span {
-    margin-left: 15px;
-}
-
-.SidebarContent__CreateBoardButton:hover {
+button.SidebarContent__CreateBoardButton:hover {
     background-color: rgba(0, 0, 0, 0.15);
 }

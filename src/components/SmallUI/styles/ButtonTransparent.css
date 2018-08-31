@@ -1,0 +1,22 @@
+.ButtonTransparent {
+    font-family: 'Catamaran', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    padding: 20px;
+    border: 0;
+    outline: none;
+    color: #27127c;
+    cursor: pointer;
+}
+
+.ButtonTransparent:hover {
+    color: #000;
+}
+
+.ButtonTransparent--with-icon span {
+    margin-left: 15px;
+}

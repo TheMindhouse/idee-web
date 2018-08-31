@@ -5,7 +5,8 @@ import { withAuth } from "../../hoc/withAuth"
 import { User } from "../../models/User"
 import "./styles/Sidebar.css"
 import { SidebarUser } from "./SidebarUser"
-import { Element, ELEMENTS } from "../Element/Element"
+import { ELEMENTS } from "../Element/Element"
+import { ButtonTransparent } from "../SmallUI/ButtonTransparent"
 
 type SidebarProps = {
   authUser: User,
@@ -24,13 +25,12 @@ class Sidebar extends React.PureComponent<SidebarProps> {
           <div className="SidebarContent__BoardsList">
             <BoardsList userId={authUser.id} />
           </div>
-          <button
-            onClick={onCreateBoardClick}
+          <ButtonTransparent
+            icon={ELEMENTS.plus}
+            label="create new board"
             className="SidebarContent__CreateBoardButton"
-          >
-            <Element icon={ELEMENTS.plus} />
-            <span>create new board</span>
-          </button>
+            onClick={onCreateBoardClick}
+          />
         </div>
       </div>
     )
