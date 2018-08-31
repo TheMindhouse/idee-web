@@ -16,10 +16,11 @@ class SignIn extends React.PureComponent<SignInProps> {
   static defaultProps = {}
 
   componentDidMount() {
-    const user = AuthFacade.getCurrentUser()
-    if (user) {
-      this.props.history.push(URLHelper.homepage)
-    }
+    AuthFacade.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        this.props.history.push(URLHelper.homepage)
+      }
+    })
   }
 
   redirectToHomepage = (authUser: User) => {
