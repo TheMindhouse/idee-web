@@ -51,7 +51,7 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
     this.setState({ idea })
   }
 
-  validateIdea = (): boolean => {
+  validate = (): boolean => {
     const { idea } = this.state
     let isValid = true
     const errors = {}
@@ -64,7 +64,7 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
   }
 
   onSave = () => {
-    if (!this.validateIdea()) {
+    if (!this.validate()) {
       return
     }
     const { idea } = this.state

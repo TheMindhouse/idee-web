@@ -26,6 +26,9 @@ type BoardOptionsState = {
   shareToEmails: Array<string>,
   emailInvalidError: boolean,
   isSaving: boolean,
+  errors: {
+    name?: boolean,
+  },
 }
 
 class BoardOptions extends React.PureComponent<
@@ -42,6 +45,7 @@ class BoardOptions extends React.PureComponent<
       shareToEmails: props.board ? Object.keys(props.board.roles) : [],
       emailInvalidError: false,
       isSaving: false,
+      errors: {},
     }
   }
 
@@ -80,7 +84,22 @@ class BoardOptions extends React.PureComponent<
     }
   }
 
+  validate = (): boolean => {
+    const { name } = this.state
+    let isValid = true
+    const errors = {}
+    if (name === "") {
+      errors.name = true
+      isValid = false
+    }
+    this.setState({ errors })
+    return isValid
+  }
+
   onSave = () => {
+    if (!this.validate()) {
+      return
+    }
     this.setState({ isSaving: true })
     const shareToEmails: Array<string> = [...this.state.shareToEmails]
     // Convert an array of e-mails to the "roles" object.
@@ -129,7 +148,7 @@ class BoardOptions extends React.PureComponent<
 
   render() {
     const { board, onClose } = this.props
-    const { name, email, shareToEmails, isSaving } = this.state
+    const { name, email, shareToEmails, isSaving, errors } = this.state
     return (
       <Modal centered={false} onClose={onClose} open={true} size="tiny">
         <Modal.Header>
@@ -137,13 +156,14 @@ class BoardOptions extends React.PureComponent<
         </Modal.Header>
         <Modal.Content>
           <Modal.Description>
-            <FormField label="Board name">
+            <FormField label="Board name" error={errors.name}>
               <input
                 type="text"
                 onChange={this.onChangeName}
                 autoFocus
                 value={name}
               />
+              <FormField.FormError message="Enter a name of the board" />
             </FormField>
 
             <FormField
