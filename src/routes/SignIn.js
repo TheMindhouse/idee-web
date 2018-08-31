@@ -7,6 +7,7 @@ import { URLHelper } from "../helpers/URLHelper"
 import ideeLogo from "../assets/images/idee_logo.svg"
 import { ELEMENTS, ELEMENTS_SIZE } from "../components/Element/Element"
 import { ButtonTransparent } from "../components/SmallUI/ButtonTransparent"
+import { Flip, toast, ToastContainer } from "react-toastify"
 
 type SignInProps = {
   history: RouterHistory,
@@ -29,14 +30,26 @@ class SignIn extends React.PureComponent<SignInProps> {
   }
 
   signInWithGoogle = () =>
-    AuthFacade.signInWithGoogle().then(this.redirectToHomepage)
+    AuthFacade.signInWithGoogle()
+      .then(this.redirectToHomepage)
+      .catch((err: Error) => toast.error(err.message))
 
   signInWithFacebook = () =>
-    AuthFacade.signInWithFacebook().then(this.redirectToHomepage)
+    AuthFacade.signInWithFacebook()
+      .then(this.redirectToHomepage)
+      .catch((err: Error) => toast.error(err.message))
 
   render() {
     return (
       <div className="FullColorPage">
+        <ToastContainer
+          position="top-right"
+          autoClose={false}
+          hideProgressBar={true}
+          draggable
+          transition={Flip}
+        />
+
         <img
           src={ideeLogo}
           alt="idée - write it down"
