@@ -28,10 +28,12 @@ class BoardsProvider extends React.Component<
 > {
   static defaultProps = {}
 
-  state = {
+  defaultState: BoardsProviderState = {
     boards: null,
     currentBoard: null,
   }
+
+  state = this.defaultState
 
   unsubscribeFunctions: Array<Function> = []
 
@@ -48,26 +50,32 @@ class BoardsProvider extends React.Component<
     this.unsubscribe()
     const user = AuthFacade.getCurrentUser()
     if (!user) {
+      // Remove any boards from the state after logout.
+      this.setState(this.defaultState)
       return
     }
     const collection = db.collection(COLLECTIONS.BOARDS)
     const userId = user.id
-    const emailPath = new FieldPath("roles", user.email)
+    const email = user.email
+    const emailPath = email ? new FieldPath("roles", email) : null
+
     const ownedRef = collection.where("ownerId", "==", userId)
-    const adminRef = collection.where(emailPath, "==", BOARD_ROLES.ADMIN)
-    const editorRef = collection.where(emailPath, "==", BOARD_ROLES.EDITOR)
-    const readerRef = collection.where(emailPath, "==", BOARD_ROLES.READER)
+
+    const adminRef = emailPath
+      ? collection.where(emailPath, "==", BOARD_ROLES.ADMIN)
+      : null
+    const editorRef = emailPath
+      ? collection.where(emailPath, "==", BOARD_ROLES.EDITOR)
+      : null
+    const readerRef = emailPath
+      ? collection.where(emailPath, "==", BOARD_ROLES.READER)
+      : null
 
     // Create Observables.
     const owned$ = new Rx.Subject()
     const admin$ = new Rx.Subject()
     const editor$ = new Rx.Subject()
     const reader$ = new Rx.Subject()
-
-    this.unsubscribeFunctions.push(this.observeBoardQuery(ownedRef, owned$))
-    this.unsubscribeFunctions.push(this.observeBoardQuery(adminRef, admin$))
-    this.unsubscribeFunctions.push(this.observeBoardQuery(editorRef, editor$))
-    this.unsubscribeFunctions.push(this.observeBoardQuery(readerRef, reader$))
 
     Rx.Observable.combineLatest(owned$, admin$, editor$, reader$).subscribe(
       (boardsContainers: Array<Array<Board>>) => {
@@ -87,6 +95,11 @@ class BoardsProvider extends React.Component<
         }
       }
     )
+
+    this.unsubscribeFunctions.push(this.observeBoardQuery(ownedRef, owned$))
+    this.unsubscribeFunctions.push(this.observeBoardQuery(adminRef, admin$))
+    this.unsubscribeFunctions.push(this.observeBoardQuery(editorRef, editor$))
+    this.unsubscribeFunctions.push(this.observeBoardQuery(readerRef, reader$))
   }
 
   unsubscribe = () => {
@@ -96,10 +109,14 @@ class BoardsProvider extends React.Component<
   }
 
   observeBoardQuery = (
-    queryRef: $npm$firebase$firestore$Query,
+    queryRef: ?$npm$firebase$firestore$Query,
     rxSubject$: rxjs$Observer<Array<Board>>
-  ): Function =>
-    queryRef.onSnapshot((querySnapshot) => {
+  ): Function => {
+    if (!queryRef) {
+      rxSubject$.next([])
+      return () => null
+    }
+    return queryRef.onSnapshot((querySnapshot) => {
       const boards = querySnapshot.docs.map(
         (doc) =>
           new Board({
@@ -109,6 +126,7 @@ class BoardsProvider extends React.Component<
       )
       rxSubject$.next(boards)
     })
+  }
 
   /**
    * Set first board as active
