@@ -1,5 +1,7 @@
 // @flow
 import * as React from "react"
+import ReactSVG from "react-svg"
+import "./styles/Element.css"
 import arrow from "../../assets/images/icons/arrow.svg"
 import arrowSmall from "../../assets/images/icons/arrow_small.svg"
 import back from "../../assets/images/icons/back.svg"
@@ -17,9 +19,11 @@ import userPlaceholder from "../../assets/images/icons/user_placeholder.svg"
 type ElementProps = {
   icon: string,
   size?: string,
+  color?: string,
   width?: string,
   className?: string,
   style?: Object,
+  onClick?: Function,
 }
 
 export const ELEMENTS = {
@@ -47,22 +51,26 @@ export const ELEMENTS_SIZE = {
 }
 
 const Element = (props: ElementProps) => {
-  const getWidth = () => (props.width ? props.width : props.size)
-
   return (
-    <img
+    <ReactSVG
       src={props.icon}
-      style={{ width: getWidth(), ...props.style }}
+      svgStyle={{
+        width: props.width || props.size,
+        fill: props.color,
+        ...props.style,
+      }}
       alt="icon"
-      className={props.className}
+      className="Element"
+      svgClassName={props.className}
       aria-hidden="true"
-      {...props}
+      onClick={props.onClick}
     />
   )
 }
 
 Element.defaultProps = {
   size: ELEMENTS_SIZE.small,
+  color: "#27127c",
 }
 
 export { Element }

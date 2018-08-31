@@ -1,0 +1,10 @@
+.Element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.Element > div {
+    line-height: 0;
+}
