@@ -9,3 +9,9 @@
 .ui.button.positive:hover {
     background: linear-gradient(45deg, #00f3f0, #62f275, #c7f900);
 }
+
+.ui.active.dimmer {
+    animation: FadeIn 0.2s;
+    animation-iteration-count: 1;
+    will-change: opacity;
+}
