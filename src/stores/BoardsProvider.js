@@ -87,7 +87,7 @@ class BoardsProvider extends React.Component<
                 this.state.currentBoard.id === board.id
             )
           : boards[0]
-        console.log("Boards updated", boards)
+        console.log("Boards list updated")
         if (!boards.length) {
           this.createDefaultBoard()
         } else {

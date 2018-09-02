@@ -19,7 +19,11 @@ const SidebarUser = withAuth((props: SidebarUserProps) => {
       className="SidebarUser"
       style={{ backgroundImage: `url(${ideeLogo})` }}
     >
-      <img src={authUser.avatarUrl} className="SidebarUser__Avatar" />
+      <img
+        src={authUser.avatarUrl}
+        className="SidebarUser__Avatar"
+        alt={authUser.name}
+      />
       <div className="SidebarUser__Content">
         <div>
           <p className="SidebarUser__Name">{authUser.name}</p>

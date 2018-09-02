@@ -50,7 +50,6 @@ class BoardPage extends React.Component<BoardPageProps, BoardPageState> {
   showDefaultView = () => this.setState({ currentView: VIEWS.DEFAULT })
 
   render() {
-    console.log("board page")
     const { currentView } = this.state
     return (
       <div className="page-container">
