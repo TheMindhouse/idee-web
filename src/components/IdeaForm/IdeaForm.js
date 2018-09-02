@@ -64,10 +64,10 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
   }
 
   onSave = () => {
-    if (!this.validate()) {
+    const { idea, isSaving } = this.state
+    if (isSaving || !this.validate()) {
       return
     }
-    const { idea } = this.state
     this.setState({ isSaving: true })
     this.isEditMode()
       ? IdeasFacade.updateIdea(idea).then(() => {
@@ -76,10 +76,12 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
             return this.props.onUpdate(idea)
           }
         })
-      : IdeasFacade.createIdea(idea).then(() => {
-          toast.success("Idea successfully added")
-          return this.props.onClose()
-        })
+      : IdeasFacade.createIdea(idea)
+          .then(() => {
+            toast.success("Idea successfully added")
+            return this.props.onClose()
+          })
+          .catch((error) => toast.error(error.message))
   }
 
   render() {

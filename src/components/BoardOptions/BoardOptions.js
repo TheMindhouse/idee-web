@@ -97,7 +97,8 @@ class BoardOptions extends React.PureComponent<
   }
 
   onSave = () => {
-    if (!this.validate()) {
+    const { isSaving } = this.state
+    if (isSaving || !this.validate()) {
       return
     }
     this.setState({ isSaving: true })
