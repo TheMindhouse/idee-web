@@ -1,4 +1,6 @@
 // @flow
+import type { FirebaseTimestamp } from "../types/FirebaseTimestamp"
+
 type IdeaProps = {
   id?: string,
   boardId: string,
@@ -7,6 +9,8 @@ type IdeaProps = {
   ease?: number,
   confidence?: number,
   impact?: number,
+  createdAt?: ?FirebaseTimestamp,
+  modifiedAt?: ?FirebaseTimestamp,
 }
 export class Idea {
   id: string
@@ -16,6 +20,8 @@ export class Idea {
   ease: number
   confidence: number
   impact: number
+  createdAt: ?FirebaseTimestamp
+  modifiedAt: ?FirebaseTimestamp
 
   constructor(props: IdeaProps) {
     this.id = props.id || ""
@@ -26,6 +32,8 @@ export class Idea {
     this.confidence =
       props.confidence === 0 ? 0 : parseInt(props.confidence, 10) || 5
     this.impact = props.impact === 0 ? 0 : parseInt(props.impact, 10) || 5
+    this.createdAt = props.createdAt || null
+    this.modifiedAt = props.modifiedAt || null
   }
 
   getAverage(): number {

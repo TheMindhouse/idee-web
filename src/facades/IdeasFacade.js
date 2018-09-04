@@ -26,6 +26,11 @@ export class IdeasFacade {
       ...idea.toExport(),
       modifiedAt: FieldValue.serverTimestamp(),
     }
+    // CreatedAt field was introduced later, so it may not be present in
+    // ideas added earlier.
+    if (!idea.createdAt) {
+      ideaToUpdate.createdAt = FieldValue.serverTimestamp()
+    }
     return (
       db
         .collection(COLLECTIONS.BOARDS)

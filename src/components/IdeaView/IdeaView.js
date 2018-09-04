@@ -67,8 +67,13 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
 
             <IdeaViewTotalScore value={idea.getAverage()} />
           </div>
-          <div>
+          <div className="IdeaViewFooter">
             <Button onClick={this.props.onClose}>Close</Button>
+            {idea.modifiedAt && (
+              <small className="color-lgray">
+                last edited {idea.modifiedAt.toDate().toLocaleDateString()}
+              </small>
+            )}
           </div>
         </div>
       </Dimmer>

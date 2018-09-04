@@ -22,6 +22,11 @@ export class BoardsFacade {
       ...board.toExport(),
       modifiedAt: FieldValue.serverTimestamp(),
     }
+    // CreatedAt field was introduced later, so it may not be present in
+    // boards added earlier.
+    if (!board.createdAt) {
+      boardToUpdate.createdAt = FieldValue.serverTimestamp()
+    }
     return db
       .collection(COLLECTIONS.BOARDS)
       .doc(board.id)

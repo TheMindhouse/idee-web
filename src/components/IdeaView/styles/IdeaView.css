@@ -59,3 +59,9 @@
     font-size: 69px;
     font-weight: bold;
 }
+
+.IdeaViewFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
