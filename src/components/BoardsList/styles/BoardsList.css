@@ -8,10 +8,12 @@
     font-weight: 400;
     font-size: 16px;
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px 40px 10px 20px;
     cursor: pointer;
     position: relative;
     border-right: 5px solid transparent;
+    display: flex;
+    align-items: center;
 }
 
 .BoardsList__Item--active {
