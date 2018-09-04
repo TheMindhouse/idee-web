@@ -23,7 +23,7 @@
 .FormField input,
 .FormField textarea {
     padding: 30px 10px 10px;
-    background: #f0eef5;
+    background: rgba(39, 18, 124, 0.05);
     color: #27127c;
     border: 0;
     outline: none;
@@ -56,7 +56,7 @@
 
 .FormField__FormRightLabel {
     padding: 30px 10px 10px;
-    background: #f0eef5;
+    background: #f4f3f8;
     position: absolute;
     top: 0;
     bottom: 0;

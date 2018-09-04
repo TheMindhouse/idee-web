@@ -8,7 +8,7 @@
 }
 
 .IdeasListItem:hover {
-    background: #fafafa;
+    background: rgba(39, 18, 124, 0.05);
 }
 
 .IdeasListItem__Name {
