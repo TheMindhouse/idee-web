@@ -20,7 +20,7 @@
 }
 
 .BoardsList__Item:hover {
-    background-color: rgba(0, 0, 0, 0.15);
+    background: rgba(39, 18, 124, 0.15);
 }
 
 .BoardsList__ItemShared {
