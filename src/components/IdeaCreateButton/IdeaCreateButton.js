@@ -13,11 +13,7 @@ class IdeaCreateButton extends React.PureComponent<IdeaCreateButtonProps> {
   render() {
     return (
       <div className="IdeaCreateButton" onClick={this.props.onClick}>
-        <Element
-          icon={ELEMENTS.plus}
-          size={ELEMENTS_SIZE.medium}
-          color="#fff"
-        />
+        <Element icon={ELEMENTS.plus} size={ELEMENTS_SIZE.medium} />
         <span>add new idea</span>
       </div>
     )

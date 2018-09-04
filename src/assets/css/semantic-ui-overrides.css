@@ -8,10 +8,12 @@
 }
 
 .ui.button.positive {
+    color: #27127c;
     background: linear-gradient(45deg, #00e7e4, #5feb72, #bfef00);
 }
 
 .ui.button.positive:hover {
+    color: #27127c;
     background: linear-gradient(45deg, #00f3f0, #62f275, #c7f900);
 }
 

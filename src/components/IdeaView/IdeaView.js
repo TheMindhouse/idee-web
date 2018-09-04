@@ -39,27 +39,29 @@ class IdeaView extends React.PureComponent<IdeaViewProps> {
               <p className="IdeaView__Name text-color-gradient">{idea.name}</p>
               <IdeaControls idea={idea} onEdit={onEdit} onDelete={onClose} />
             </div>
-            <p className="IdeaView__Description">{idea.description}</p>
+            <p className="IdeaView__Description color-gray">
+              {idea.description}
+            </p>
             <Divider />
             <div className="IdeaView__Scores">
               <p>
                 <span className="IdeaViewScore__Type">ease</span>
                 <span className="IdeaViewScore__Value">{idea.ease}</span>
-                <span className="IdeaViewScore__Text">
+                <span className="IdeaViewScore__Text color-lgray">
                   {SCORE_TEXTS.EASE[idea.ease]}
                 </span>
               </p>
               <p>
                 <span className="IdeaViewScore__Type">confidence</span>
                 <span className="IdeaViewScore__Value">{idea.confidence}</span>
-                <span className="IdeaViewScore__Text">
+                <span className="IdeaViewScore__Text color-lgray">
                   {SCORE_TEXTS.CONFIDENCE[idea.confidence]}
                 </span>
               </p>
               <p>
                 <span className="IdeaViewScore__Type">impact</span>
                 <span className="IdeaViewScore__Value">{idea.impact}</span>
-                <span className="IdeaViewScore__Text">
+                <span className="IdeaViewScore__Text color-lgray">
                   {SCORE_TEXTS.IMPACT[idea.impact]}
                 </span>
               </p>
