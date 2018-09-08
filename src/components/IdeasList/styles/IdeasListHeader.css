@@ -7,3 +7,11 @@
 .IdeasListHeader__Name {
     font-size: 45px;
 }
+
+
+@media screen and (max-width: 767px){
+    .IdeasListHeader__Name {
+        font-size: 35px;
+        margin-bottom: 0;
+    }
+}

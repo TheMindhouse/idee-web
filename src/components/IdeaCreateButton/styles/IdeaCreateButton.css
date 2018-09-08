@@ -1,5 +1,5 @@
 .IdeaCreateButton {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 30px;
     display: flex;
@@ -18,4 +18,16 @@
 
 .IdeaCreateButton span {
     margin-left: 15px;
+}
+
+@media screen and (max-width: 767px) {
+    .IdeaCreateButton {
+        padding: 15px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .IdeaCreateButton span {
+        display: none;
+    }
 }

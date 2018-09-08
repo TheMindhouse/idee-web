@@ -1,5 +1,12 @@
 .IdeasList {
-    width: 600px;
+    width: 700px;
     max-width: 100%;
     padding: 30px;
+}
+
+@media screen and (max-width: 767px){
+    .IdeasList {
+        width: 100%;
+        padding-top: 0;
+    }
 }

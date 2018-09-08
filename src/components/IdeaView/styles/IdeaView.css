@@ -65,3 +65,14 @@
     justify-content: space-between;
     align-items: center;
 }
+
+@media screen and (max-width: 767px){
+    .IdeaView {
+        width: 100vw;
+        height: auto;
+        left: 0;
+        bottom: initial;
+        min-height: 100vh;
+        animation: none;
+    }
+}

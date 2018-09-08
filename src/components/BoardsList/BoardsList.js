@@ -8,6 +8,7 @@ import { Element, ELEMENTS, ELEMENTS_SIZE } from "../Element/Element"
 
 type BoardsListProps = {
   userId: string,
+  onBoardClick?: Function,
   boardsStore: BoardsStoreType,
 }
 
@@ -23,6 +24,14 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
   }
 
   sortBoards = (a: Board, b: Board): number => a.name.localeCompare(b.name)
+
+  onBoardClick = (boardId: string) => {
+    const { boardsStore, onBoardClick } = this.props
+    boardsStore.setActiveBoard(boardId)
+    if (typeof onBoardClick === "function") {
+      onBoardClick()
+    }
+  }
 
   render() {
     const { boardsStore, userId } = this.props
@@ -41,7 +50,7 @@ class BoardsList extends React.PureComponent<BoardsListProps, BoardsListState> {
                 ? "BoardsList__Item--active"
                 : ""
             }`}
-            onClick={() => boardsStore.setActiveBoard(board.id)}
+            onClick={() => this.onBoardClick(board.id)}
           >
             {board.name}
             {!board.isOwner(userId) && (

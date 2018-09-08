@@ -31,3 +31,14 @@
     margin: 10px 0;
     font-size: 16px;
 }
+
+@media screen and (max-width: 767px){
+    .IdeaForm {
+        width: 100vw;
+        height: auto;
+        left: 0;
+        bottom: initial;
+        min-height: 100vh;
+        animation: none;
+    }
+}

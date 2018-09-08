@@ -33,6 +33,7 @@ const SidebarUser = withAuth((props: SidebarUserProps) => {
         </div>
         <div className="SidebarUser__Menu">
           <Dropdown
+            direction="left"
             icon={<Element icon={ELEMENTS.arrow} size={ELEMENTS_SIZE.tiny} />}
           >
             <Dropdown.Menu>

@@ -31,3 +31,9 @@
 .IdeasListControls__SortDirection:hover {
     opacity: 1;
 }
+
+@media screen and (max-width: 424px){
+    .IdeasListControls {
+        flex-direction: column;
+    }
+}
