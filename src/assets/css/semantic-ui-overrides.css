@@ -5,6 +5,11 @@
 .ui.button {
     border-radius: 0;
     text-transform: lowercase;
+    color: #27127c;
+}
+
+.ui.button:hover {
+    color: #27127c;
 }
 
 .ui.button.positive {
@@ -54,6 +59,15 @@
     color: rgba(39, 18, 124, 1);
 }
 
-.ui.dropdown .menu>.item:hover {
+.ui.dropdown .menu > .item {
+    color: #27127c;
+}
+
+.ui.dropdown .menu > .item:hover {
+    color: #27127c;
     background: rgba(39, 18, 124, 0.05);
+}
+
+.ui.dropdown > .text {
+    color: #27127c !important;
 }
