@@ -13,3 +13,9 @@
     bottom: 0;
     left: 0;
 }
+
+@media screen and (max-width: 424px){
+    .Score {
+        padding-bottom: 10%;
+    }
+}

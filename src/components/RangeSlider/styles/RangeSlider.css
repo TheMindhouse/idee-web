@@ -67,6 +67,21 @@
 .RangeSlider--sliding .RangeSlider__Value--Default {
     opacity: 0;
 }
+
 .RangeSlider--sliding .RangeSlider__Value--Sliding {
     opacity: 1;
+}
+
+@media screen and (max-width: 767px){
+    .RangeSlider__Input::-webkit-slider-thumb {
+        opacity: 1;
+        background: #000;
+        border: 0;
+    }
+}
+
+@media screen and (max-width: 424px){
+    .RangeSlider {
+        padding-bottom: 10%;
+    }
 }
