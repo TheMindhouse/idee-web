@@ -9,19 +9,17 @@ import { AuthProvider } from "./stores/AuthProvider"
 import { BoardsProvider } from "./stores/BoardsProvider"
 import { ErrorPage404 } from "./routes/ErrorPage404"
 import { requireAuthOrRedirect } from "./hoc/requireAuthOrRedirect"
-// import ReactGA from "react-ga"
-// import { hotjar } from "react-hotjar"
+import ReactGA from "react-ga"
+import { CONFIG } from "./config"
 
 // Initialize Google Analytics
-// const hostname = window && window.location && window.location.hostname
-// if (hostname === CONFIG.PAGE_URL) {
-//   ReactGA.initialize(CONFIG.ANALYTICS_ID)
-//   hotjar.initialize(CONFIG.HOTJAR_ID, CONFIG.HOTJAR_VERSION)
-// }
-//
+const hostname = window && window.location && window.location.hostname
+if (hostname === CONFIG.HOSTNAME) {
+  ReactGA.initialize(CONFIG.ANALYTICS_ID)
+}
+
 const logPageView = () => {
-  // ReactGA.set({ page: window.location.pathname })
-  // ReactGA.pageview(window.location.pathname)
+  ReactGA.pageview(window.location.pathname)
   return null
 }
 

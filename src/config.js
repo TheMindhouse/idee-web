@@ -21,6 +21,8 @@ const FIREBASE_DEV = {
 console.log(process.env.REACT_APP_FIREBASE_CONFIG)
 
 export const CONFIG = {
+  HOSTNAME: "idee.mindhouse.io",
+  ANALYTICS_ID: "UA-117937544-7",
   firebase:
     process.env.REACT_APP_FIREBASE_CONFIG === "production"
       ? FIREBASE_PRODUCTION
