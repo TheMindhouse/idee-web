@@ -19,7 +19,7 @@ const FIREBASE_DEV = {
 }
 
 console.log(
-  "REACT_APP_FIREBASE_CONFIG = ",
+  "REACT_APP_FIREBASE_CONFIG =",
   process.env.REACT_APP_FIREBASE_CONFIG
 )
 
