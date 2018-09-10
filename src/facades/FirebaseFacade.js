@@ -9,8 +9,6 @@ if (!firebase.apps.length) {
   firebase.initializeApp(config)
 }
 
-console.log("Setting up Firebase")
-
 // Initialize Cloud Firestore through Firebase
 const db = firebase.firestore()
 

@@ -2,7 +2,6 @@
 import * as React from "react"
 import { type RouterHistory, withRouter } from "react-router-dom"
 import { AuthFacade } from "../facades/AuthFacade"
-import { User } from "../models/User"
 import { URLHelper } from "../helpers/URLHelper"
 import ideeLogo from "../assets/images/idee_logo.svg"
 import { ELEMENTS, ELEMENTS_SIZE } from "../components/Element/Element"
@@ -24,8 +23,7 @@ class SignIn extends React.PureComponent<SignInProps> {
     })
   }
 
-  redirectToHomepage = (authUser: User) => {
-    console.log("Sign In successful for ", authUser)
+  redirectToHomepage = () => {
     this.props.history.push(URLHelper.homepage)
   }
 

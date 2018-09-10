@@ -18,10 +18,7 @@ const FIREBASE_DEV = {
   messagingSenderId: "854949127425",
 }
 
-console.log(
-  "REACT_APP_FIREBASE_CONFIG =",
-  process.env.REACT_APP_FIREBASE_CONFIG
-)
+console.log(process.env.REACT_APP_FIREBASE_CONFIG)
 
 export const CONFIG = {
   firebase:

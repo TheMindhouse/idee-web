@@ -5,8 +5,6 @@ import { FirebaseUser } from "../models/FirebaseUser"
 import { UsersFacade } from "./UsersFacade"
 import { User } from "../models/User"
 
-console.log("Setting up Auth Facade")
-
 const facebookProvider = new firebase.auth.FacebookAuthProvider()
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 

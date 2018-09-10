@@ -138,7 +138,6 @@ class BoardOptions extends React.PureComponent<
     BoardsFacade.updateBoard(board)
       .then(() => {
         toast.success("Board updated")
-        console.log(`Updated board ${board.name}`)
         this.props.onSave(board.id)
       })
       .catch((error) => {
