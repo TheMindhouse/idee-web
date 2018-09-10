@@ -28,7 +28,7 @@ const logPageView = () => {
 class App extends Component<{}> {
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL || ""}>
         <AuthProvider>
           <BoardsProvider>
             <ScrollToTop>
