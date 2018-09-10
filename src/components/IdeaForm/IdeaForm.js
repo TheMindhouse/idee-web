@@ -9,6 +9,7 @@ import { SCORE_TEXTS } from "../../constants/scores"
 import { toast } from "react-toastify"
 import { RangeSlider } from "../RangeSlider/RangeSlider"
 import { IdeaViewTotalScore } from "../IdeaView/IdeaViewTotalScore"
+import TextareaAutosize from "react-textarea-autosize"
 
 type IdeaFormProps = {
   boardId: string,
@@ -98,13 +99,13 @@ class IdeaForm extends React.PureComponent<IdeaFormProps, IdeaFormState> {
               <input
                 type="text"
                 onChange={this.onChangeField.bind(null, "name", false)}
-                autoFocus
+                autoFocus={window.screen.width > 767}
                 value={name}
               />
               <FormField.FormError message="Enter a name" />
             </FormField>
             <FormField label="Description">
-              <textarea
+              <TextareaAutosize
                 value={description}
                 onChange={this.onChangeField.bind(null, "description", false)}
               />

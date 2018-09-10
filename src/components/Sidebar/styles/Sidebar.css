@@ -45,6 +45,10 @@ button.SidebarContent__CreateBoardButton:hover {
         transform: translateX(-100%);
     }
 
+    .SidebarContent {
+        padding-bottom: 80px;
+    }
+
     .Sidebar--opened {
         transform: translateX(0);
     }

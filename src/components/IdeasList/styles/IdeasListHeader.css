@@ -2,10 +2,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .IdeasListHeader__Name {
     font-size: 45px;
+    margin-bottom: 0;
 }
 
 

@@ -161,7 +161,7 @@ class BoardOptions extends React.PureComponent<
               <input
                 type="text"
                 onChange={this.onChangeName}
-                autoFocus
+                autoFocus={window.screen.width > 767}
                 value={name}
               />
               <FormField.FormError message="Enter a name of the board" />

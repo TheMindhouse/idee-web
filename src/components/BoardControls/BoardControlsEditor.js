@@ -72,7 +72,7 @@ class BoardControlsEditor extends React.PureComponent<
         <Confirm
           open={currentView === VIEWS.BOARD_LEAVE}
           size="tiny"
-          header={`Leave board ${board.name}?`}
+          header={`Leave board "${board.name}"?`}
           content="The board will be removed from your list. To regain access ask the board's owner to invite you again."
           confirmButton="Leave board"
           onCancel={this.showDefaultView}

@@ -71,3 +71,12 @@
 .ui.dropdown > .text {
     color: #27127c !important;
 }
+
+
+@media screen and (max-width: 767px){
+    .ui.dropdown .menu > .item > .text {
+        font-size: 18px;
+        padding: 8px 0;
+        display: block;
+    }
+}
