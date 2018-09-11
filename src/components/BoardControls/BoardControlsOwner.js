@@ -76,7 +76,7 @@ class BoardControlsOwner extends React.PureComponent<
         <Confirm
           open={currentView === VIEWS.BOARD_REMOVE}
           size="tiny"
-          header={`Delete board ${board.name}?`}
+          header={`Delete board "${board.name}"?`}
           content="This operation is irreversible. All ideas from this board will be permanently deleted."
           confirmButton="Delete board"
           onCancel={this.showDefaultView}

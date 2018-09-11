@@ -22,6 +22,14 @@
     background: linear-gradient(45deg, #00f3f0, #62f275, #c7f900);
 }
 
+.ui.button.primary {
+    background: #27127c;
+}
+
+.ui.button.primary:hover {
+    background: #1e0f5e;
+}
+
 /** ####################################################################
     DIMMER
     ##################################################################*/
@@ -72,11 +80,18 @@
     color: #27127c !important;
 }
 
-
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
     .ui.dropdown .menu > .item > .text {
         font-size: 18px;
         padding: 8px 0;
         display: block;
     }
+}
+
+/** ####################################################################
+    MODAL
+    ##################################################################*/
+
+.ui.modal > .header {
+    color: #27127c;
 }
