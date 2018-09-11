@@ -11,6 +11,13 @@
     align-items: stretch;
 }
 
+.IdeasListControls__SortDropdown .Element {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    bottom: 0;
+}
+
 .IdeasListControls__SortDirection {
     padding: 0 15px;
     cursor: pointer;

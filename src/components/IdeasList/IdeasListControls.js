@@ -32,6 +32,8 @@ class IdeasListControls extends React.PureComponent<IdeasListControlsProps> {
           <Dropdown
             placeholder="Sort by"
             selection
+            className="IdeasListControls__SortDropdown"
+            icon={<Element icon={ELEMENTS.arrow} size={ELEMENTS_SIZE.tiny} />}
             value={sortBy}
             onChange={changeSortMethod}
             options={Object.keys(SORT_METHODS).map((method) => ({
